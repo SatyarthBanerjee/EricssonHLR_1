@@ -1,7 +1,7 @@
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { DropDown1, DropDown2, DropDown3, DropDown4, DropDown5, DropDown6, DropDown7, DropDown8 } from './DropDowns/DropDown'
 import { Switch } from 'antd'
+import { postData } from './PostData'
 
 const CreateMyForm = () => {
   const [data, setData] = useState({
@@ -216,9 +216,7 @@ const CreateMyForm = () => {
     ) {
       setPersonalerror(true);
     } else {
-      axios.post("/api/d76033a5d402462c841a9f5dd9465091/stu_1", formData)
-        .then(res => console.log(res))
-        .catch(error => console.log(error));
+      postData(formData)
         
       setisSubmitted(true);
       console.log(data);
@@ -320,53 +318,65 @@ const CreateMyForm = () => {
           />
         </div>
 
-        <p>Services</p>
+        <h1  className='serviceh1'>Services</h1>
         <div className='services'>
           <div className='leftservices'>
               <input
-                className='input smsmt'
                 value={data.GetResponseSubscriber.services.smsmt}
                 placeholder='SMSMT'
                 onChange={e => { handleChange('services', 'smsmt', null, e.target.value) }}
               />
-              <p>CLIP</p>
-              <DropDown3
-                value3={data.GetResponseSubscriber.services.clip.prov}
-                onChange3={e => { handleChange('services', 'clip', 'prov', e.target.value) }}
-              />
-              <p>ODBOC</p>
-              <DropDown4
-                value4={data.GetResponseSubscriber.services.odboc.odboctyps}
-                onChange4={e => handleChange("services", "odboc", "odboctyps", e.target.value)}
-              />
-
-              <p>ODBROAM</p>
-              <DropDown5
-                value5={data.GetResponseSubscriber.services.odbroam.odbroamtyp}
-                onChange5={e => handleChange("services", "odbroam", "odbroamtyp", e.target.value)}
-              />
-
-              <p>Category</p>
-              <DropDown6
-                value6={data.GetResponseSubscriber.services.category.categorytyp}
-                onChange6={e => handleChange("services", "category", "categorytyp", e.target.value)}
-              />
-
-              <p>EPS</p>
-              <div className="switch-container">
-                <Switch
-                  checked={data.GetResponseSubscriber.services.eps.prov}
-                  onChange={handleSwitch_2}
-                  style={{
-                    backgroundColor: data.GetResponseSubscriber.services.eps.prov ? 'green' : 'white',
-                  }}
+              <div className='leftcontent'>
+                <p>CLIP</p>
+                <DropDown3
+                  value3={data.GetResponseSubscriber.services.clip.prov}
+                  onChange3={e => { handleChange('services', 'clip', 'prov', e.target.value) }}
                 />
               </div>
-              <p>SMDP</p>
-              <DropDown8
-                value8={data.GetResponseSubscriber.smdp}
-                onChange8={e => handleChange("services", "smdp", null, e.target.value)}
-              />
+              <div className='leftcontent'>
+                <p>ODBOC</p>
+                <DropDown4
+                  value4={data.GetResponseSubscriber.services.odboc.odboctyps}
+                  onChange4={e => handleChange("services", "odboc", "odboctyps", e.target.value)}
+                />
+
+              </div>
+              <div className='leftcontent'>
+                <p>ODBROAM</p>
+                <DropDown5
+                  value5={data.GetResponseSubscriber.services.odbroam.odbroamtyp}
+                  onChange5={e => handleChange("services", "odbroam", "odbroamtyp", e.target.value)}
+                />
+              </div>
+              <div className='leftcontent'>
+                <p>Category</p>
+                <DropDown6
+                  value6={data.GetResponseSubscriber.services.category.categorytyp}
+                  onChange6={e => handleChange("services", "category", "categorytyp", e.target.value)}
+                />
+
+              </div>
+              <div className='leftcontent'>
+                <p>EPS</p>
+                <div className="switch-container">
+                  <Switch
+                    checked={data.GetResponseSubscriber.services.eps.prov}
+                    onChange={handleSwitch_2}
+                    style={{
+                      backgroundColor: data.GetResponseSubscriber.services.eps.prov ? 'green' : 'lightgrey',
+                    }}
+                  />
+                </div>
+              </div>
+    
+              <div className='leftcontent'>
+                <p>SMDP</p>
+                <DropDown8
+                  value8={data.GetResponseSubscriber.smdp}
+                  onChange8={e => handleChange("services", "smdp", null, e.target.value)}
+                />
+              </div>
+           
          </div>
          
 
@@ -409,28 +419,33 @@ const CreateMyForm = () => {
           </div>
         </div>
         
+        <div className='lastPart'>
+          <>
+            <p>RROPTION</p>
+            <DropDown7
+              value7={data.GetResponseSubscriber.rroption}
+              onChange7={e => handleChange("rroption", null, null, e.target.value)}
+            />
+          </>
 
-        <p>RROPTION</p>
-        <DropDown7
-          value7={data.GetResponseSubscriber.rroption}
-          onChange7={e => handleChange("rroption", null, null, e.target.value)}
-        />
+          {personalError === false ?
+            <input
+              className='input skey'
+              name="skey"
+              value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
+              placeholder='SKEY'
+              onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
+            />
+            : <label>*Numeric and max length 9</label>
+          }
 
-        {personalError === false ?
-          <input
-            className='input skey'
-            name="skey"
-            value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
-            placeholder='SKEY'
-            onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
-          />
-          : <label>*Numeric and max length 9</label>
-        }
-
+        </div>
+       
         {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>}
       </div>
-
+      
       <button className="submitbtn" onClick={handleSubmit}>Submit</button>
+      {/* <button className='updatebtn' onClick={handleUpdate}>Update</button> */}
     </>
   )
 }
