@@ -207,30 +207,31 @@ const CreateMyForm = () => {
     const formData = data.GetResponseSubscriber;
     
     const convertedFormData = convertObjectToString(formData);
-    const payloadString = JSON.stringify(convertedFormData);
+    const payloadString = JSON.stringify({GetResponseSubscriber:convertedFormData});
     console.log(payloadString);
     if (
-      formData.imsi === null ||
-      formData.msisdn === null ||
-      formData.hlrsn === null ||
-      formData.cardType.trim() === "" ||
-      formData.nam.trim() === ""
+      convertedFormData.imsi === null ||
+      convertedFormData.msisdn === null ||
+      convertedFormData.hlrsn === null ||
+      convertedFormData.cardType.trim() === "" ||
+      convertedFormData.nam.trim() === ""
     ) {
       setError(true);
       alert("Enter all required fields");
     } else if (
       !Number.isInteger(Number(formData.imsi)) ||
-      formData.imsi.toString().length !== 14 ||
+      convertedFormData.imsi.toString().length !== 14 ||
       !Number.isInteger(Number(formData.msisdn)) ||
-      formData.msisdn.toString().length !== 10 ||
+      convertedFormData.msisdn.toString().length !== 10 ||
       !Number.isInteger(Number(formData.hlrsn)) ||
-      formData.hlrsn.toString().length !== 1 ||
+      convertedFormData.hlrsn.toString().length !== 1 ||
       !Number.isInteger(Number(formData.skey)) ||
       isOptgprsValid
     ) {
       setPersonalerror(true);
     } else {
-      postData(formData)
+      postData(payloadString)
+      console.log(data);
         
       setisSubmitted(true);
     }
