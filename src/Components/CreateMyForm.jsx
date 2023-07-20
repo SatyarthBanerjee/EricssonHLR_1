@@ -6,9 +6,9 @@ import { postData } from './PostData'
 const CreateMyForm = () => {
   const [data, setData] = useState({
     GetResponseSubscriber: {
-      imsi: "",
-      msisdn: "",
-      hlrsn: "",
+      imsi: null,
+      msisdn: null,
+      hlrsn: null,
       cardType: "",
       nam: "",
       services: {
@@ -18,7 +18,7 @@ const CreateMyForm = () => {
         smsmt: "",
         optgprss: {
           optgprs: [
-            { prov: "", cntxld: "" },
+            { prov: false, cntxld: null },
           ]
         },
         odboc: {
@@ -31,7 +31,7 @@ const CreateMyForm = () => {
           categorytyp: ""
         },
         eps: {
-          prov: ""
+          prov: false
         },
         smdp: ""
       },
@@ -53,7 +53,7 @@ const CreateMyForm = () => {
             ...prevData.GetResponseSubscriber.services.optgprss,
             optgprs: prevData.GetResponseSubscriber.services.optgprss.optgprs.map((item, i) => {
               if (i === index) {
-                const parsedValue = value;
+                const parsedValue = parseInt(value);
                 const isValid = !isNaN(parsedValue) && parsedValue.toString().length === 1;
                 return {
                   ...item,
@@ -78,7 +78,7 @@ const CreateMyForm = () => {
         if (i === index) {
           return {
             ...item,
-            prov: !item.prov,
+            prov:!item.prov
           };
         }
         return item;
@@ -161,7 +161,7 @@ const CreateMyForm = () => {
         ...prevData,
         GetResponseSubscriber: {
           ...prevData.GetResponseSubscriber,
-          [parentKey]: value ?(value) : null
+          [parentKey]: value ? parseInt(value) : null
         }
       }));
     } else {
@@ -187,14 +187,28 @@ const CreateMyForm = () => {
 
   const isOptgprsValid = data.GetResponseSubscriber.services.optgprss.optgprs.some(
     (item) =>
-      !Number.isInteger(Number(item.cntxld)) ||
+      !Number.isInteger(item.cntxld) ||
       item.cntxld.toString().length !== 1
   );
+  const convertObjectToString = (obj) => {
+    const newObj = {};
+    for (let key in obj) {
+      const newKey = key.toString();
+      const value = obj[key];
+      const newValue =
+        typeof value === 'object' ? convertObjectToString(value) : value.toString();
+      newObj[newKey] = newValue;
+    }
+    return newObj;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = data.GetResponseSubscriber;
-
+    
+    const convertedFormData = convertObjectToString(formData);
+    const payloadString = JSON.stringify(convertedFormData);
+    console.log(payloadString);
     if (
       formData.imsi === null ||
       formData.msisdn === null ||
@@ -219,7 +233,6 @@ const CreateMyForm = () => {
       postData(formData)
         
       setisSubmitted(true);
-      console.log(data);
     }
   };
 
@@ -276,7 +289,7 @@ const CreateMyForm = () => {
               name="imsi"
               value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
               placeholder='IMSI'
-              onChange={e => handleChange('imsi', null, null, (e.target.value))}
+              onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
             />
             : <label>*Numeric and length 14</label>
           }
@@ -288,7 +301,7 @@ const CreateMyForm = () => {
               name="msisdn"
               value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
               placeholder='MSISDN'
-              onChange={e => handleChange('msisdn', null, null, (e.target.value))}
+              onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
             />
             : <label>*Numeric and length 10</label>
           }
@@ -300,7 +313,7 @@ const CreateMyForm = () => {
               name="hlrsn"
               value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
               placeholder='HLRSN'
-              onChange={e => handleChange('hlrsn', null, null,(e.target.value))}
+              onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
             />
             : <label>*Numeric and length 1</label>
           }
@@ -434,7 +447,7 @@ const CreateMyForm = () => {
               name="skey"
               value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
               placeholder='SKEY'
-              onChange={e => handleChange('skey', null, null, (e.target.value))}
+              onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
             />
             : <label>*Numeric and max length 9</label>
           }
