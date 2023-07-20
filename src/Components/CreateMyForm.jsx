@@ -6,9 +6,9 @@ import { postData } from './PostData'
 const CreateMyForm = () => {
   const [data, setData] = useState({
     GetResponseSubscriber: {
-      imsi: null,
-      msisdn: null,
-      hlrsn: null,
+      imsi: "",
+      msisdn: "",
+      hlrsn: "",
       cardType: "",
       nam: "",
       services: {
@@ -18,7 +18,7 @@ const CreateMyForm = () => {
         smsmt: "",
         optgprss: {
           optgprs: [
-            { prov: false, cntxld: null },
+            { prov: "", cntxld: "" },
           ]
         },
         odboc: {
@@ -31,7 +31,7 @@ const CreateMyForm = () => {
           categorytyp: ""
         },
         eps: {
-          prov: false
+          prov: ""
         },
         smdp: ""
       },
@@ -53,7 +53,7 @@ const CreateMyForm = () => {
             ...prevData.GetResponseSubscriber.services.optgprss,
             optgprs: prevData.GetResponseSubscriber.services.optgprss.optgprs.map((item, i) => {
               if (i === index) {
-                const parsedValue = parseInt(value);
+                const parsedValue = value;
                 const isValid = !isNaN(parsedValue) && parsedValue.toString().length === 1;
                 return {
                   ...item,
@@ -161,7 +161,7 @@ const CreateMyForm = () => {
         ...prevData,
         GetResponseSubscriber: {
           ...prevData.GetResponseSubscriber,
-          [parentKey]: value ? parseInt(value) : null
+          [parentKey]: value ?(value) : null
         }
       }));
     } else {
@@ -187,7 +187,7 @@ const CreateMyForm = () => {
 
   const isOptgprsValid = data.GetResponseSubscriber.services.optgprss.optgprs.some(
     (item) =>
-      !Number.isInteger(item.cntxld) ||
+      !Number.isInteger(Number(item.cntxld)) ||
       item.cntxld.toString().length !== 1
   );
 
@@ -205,13 +205,13 @@ const CreateMyForm = () => {
       setError(true);
       alert("Enter all required fields");
     } else if (
-      !Number.isInteger(formData.imsi) ||
+      !Number.isInteger(Number(formData.imsi)) ||
       formData.imsi.toString().length !== 14 ||
-      !Number.isInteger(formData.msisdn) ||
+      !Number.isInteger(Number(formData.msisdn)) ||
       formData.msisdn.toString().length !== 10 ||
-      !Number.isInteger(formData.hlrsn) ||
+      !Number.isInteger(Number(formData.hlrsn)) ||
       formData.hlrsn.toString().length !== 1 ||
-      !Number.isInteger(formData.skey) ||
+      !Number.isInteger(Number(formData.skey)) ||
       isOptgprsValid
     ) {
       setPersonalerror(true);
@@ -276,7 +276,7 @@ const CreateMyForm = () => {
               name="imsi"
               value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
               placeholder='IMSI'
-              onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
+              onChange={e => handleChange('imsi', null, null, (e.target.value))}
             />
             : <label>*Numeric and length 14</label>
           }
@@ -288,7 +288,7 @@ const CreateMyForm = () => {
               name="msisdn"
               value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
               placeholder='MSISDN'
-              onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
+              onChange={e => handleChange('msisdn', null, null, (e.target.value))}
             />
             : <label>*Numeric and length 10</label>
           }
@@ -300,7 +300,7 @@ const CreateMyForm = () => {
               name="hlrsn"
               value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
               placeholder='HLRSN'
-              onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
+              onChange={e => handleChange('hlrsn', null, null,(e.target.value))}
             />
             : <label>*Numeric and length 1</label>
           }
@@ -434,7 +434,7 @@ const CreateMyForm = () => {
               name="skey"
               value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
               placeholder='SKEY'
-              onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
+              onChange={e => handleChange('skey', null, null, (e.target.value))}
             />
             : <label>*Numeric and max length 9</label>
           }
