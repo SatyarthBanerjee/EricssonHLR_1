@@ -18,17 +18,17 @@ const CreateMyForm = () => {
         smsmt: "",
         optgprss: {
           optgprs: [
-            { prov: false, cntxld: null },
+            { prov: false, cntxId: null },
           ]
         },
         odboc: {
-          odboctyps: ""
+          odboc: ""
         },
         odbroam: {
-          odbroamtyp: ""
+          odbroam: ""
         },
         category: {
-          categorytyp: ""
+          category: ""
         },
         eps: {
           prov: false
@@ -126,7 +126,7 @@ const CreateMyForm = () => {
             ...prevData.GetResponseSubscriber.services.optgprss,
             optgprs: [
               ...prevData.GetResponseSubscriber.services.optgprss.optgprs,
-              { prov: false, cntxld: null },
+              { prov: false, cntxId: null },
             ]
           }
         }
@@ -187,8 +187,8 @@ const CreateMyForm = () => {
 
   const isOptgprsValid = data.GetResponseSubscriber.services.optgprss.optgprs.some(
     (item) =>
-      !Number.isInteger(item.cntxld) ||
-      item.cntxld.toString().length !== 1
+      !Number.isInteger(item.cntxId) ||
+      item.cntxId.toString().length !== 1
   );
   const convertObjectToString = (obj) => {
     const newObj = {};
@@ -268,17 +268,17 @@ const CreateMyForm = () => {
             smsmt: "", //text
             optgprss: {
               optgprs: [
-                { prov: false, cntxld: '' },
+                { prov: false, cntxId: '' },
               ]
             },
             odboc: {
-              odboctyps: ""
+              odboc: ""
             },
             odbroam: {
-              odbroamtyp: ""
+              odbroam: ""
             },
             category: {
-              categorytyp: ""
+              category: ""
             },
             eps: {
               prov: false
@@ -364,23 +364,23 @@ const CreateMyForm = () => {
               <div className='leftcontent'>
                 <p>ODBOC</p>
                 <DropDown4
-                  value4={data.GetResponseSubscriber.services.odboc.odboctyps}
-                  onChange4={e => handleChange("services", "odboc", "odboctyps", e.target.value)}
+                  value4={data.GetResponseSubscriber.services.odboc.odboc}
+                  onChange4={e => handleChange("services", "odboc", "odboc", e.target.value)}
                 />
 
               </div>
               <div className='leftcontent'>
                 <p>ODBROAM</p>
                 <DropDown5
-                  value5={data.GetResponseSubscriber.services.odbroam.odbroamtyp}
-                  onChange5={e => handleChange("services", "odbroam", "odbroamtyp", e.target.value)}
+                  value5={data.GetResponseSubscriber.services.odbroam.odbroam}
+                  onChange5={e => handleChange("services", "odbroam", "odbroam", e.target.value)}
                 />
               </div>
               <div className='leftcontent'>
                 <p>Category</p>
                 <DropDown6
-                  value6={data.GetResponseSubscriber.services.category.categorytyp}
-                  onChange6={e => handleChange("services", "category", "categorytyp", e.target.value)}
+                  value6={data.GetResponseSubscriber.services.category.category}
+                  onChange6={e => handleChange("services", "category", "category", e.target.value)}
                 />
 
               </div>
@@ -400,7 +400,7 @@ const CreateMyForm = () => {
               <div className='leftcontent'>
                 <p>SMDP</p>
                 <DropDown8
-                  value8={data.GetResponseSubscriber.smdp}
+                  value8={data.GetResponseSubscriber.services.smdp}
                   onChange8={e => handleChange("services", "smdp", null, e.target.value)}
                 />
               </div>
@@ -430,8 +430,8 @@ const CreateMyForm = () => {
                   <input
                     className='arrinp'
                     type="text"
-                    value={item.cntxld === null ? "" : item.cntxld}
-                    onChange={e => handleChange_1(e, index, 'cntxld')}
+                    value={item.cntxId === null ? "" : item.cntxId}
+                    onChange={e => handleChange_1(e, index, 'cntxId')}
                   />
                   : <label>*Numeric and 1 digit only</label>
                 }
