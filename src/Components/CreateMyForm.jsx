@@ -204,39 +204,53 @@ const CreateMyForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = data.GetResponseSubscriber;
-    
-    const convertedFormData = convertObjectToString(formData);
-    const payloadString = JSON.stringify({GetResponseSubscriber:convertedFormData});
+    const convertedFormData = convertObjectToString(data);
+    const payloadString = JSON.stringify(convertedFormData);
     console.log(payloadString);
+  
+    // Check if required fields are not empty
     if (
-      convertedFormData.imsi === null ||
-      convertedFormData.msisdn === null ||
-      convertedFormData.hlrsn === null ||
-      convertedFormData.cardType.trim() === "" ||
-      convertedFormData.nam.trim() === ""
+      data.GetResponseSubscriber.imsi === null ||
+      data.GetResponseSubscriber.msisdn === null ||
+      data.GetResponseSubscriber.hlrsn === null ||
+      data.GetResponseSubscriber.cardType.trim() === "" ||
+      data.GetResponseSubscriber.nam.trim() === ""
     ) {
       setError(true);
       alert("Enter all required fields");
-    } else if (
-      !Number.isInteger(Number(formData.imsi)) ||
-      convertedFormData.imsi.toString().length !== 14 ||
-      !Number.isInteger(Number(formData.msisdn)) ||
-      convertedFormData.msisdn.toString().length !== 10 ||
-      !Number.isInteger(Number(formData.hlrsn)) ||
-      convertedFormData.hlrsn.toString().length !== 1 ||
-      !Number.isInteger(Number(formData.skey)) ||
-      isOptgprsValid
-    ) {
-      setPersonalerror(true);
     } else {
-      postData(payloadString)
-      console.log(data);
-        
-      setisSubmitted(true);
+      // Check for numeric validations
+      if (
+        isNaN(parseInt(data.GetResponseSubscriber.imsi)) ||
+        data.GetResponseSubscriber.imsi.toString().length !== 14 ||
+        isNaN(parseInt(data.GetResponseSubscriber.msisdn)) ||
+        data.GetResponseSubscriber.msisdn.toString().length !== 10 ||
+        isNaN(parseInt(data.GetResponseSubscriber.hlrsn)) ||
+        data.GetResponseSubscriber.hlrsn.toString().length !== 1 ||
+        isNaN(parseInt(data.GetResponseSubscriber.skey)) ||
+        data.GetResponseSubscriber.skey.toString().length > 9
+      ) {
+        setPersonalerror(true);
+      } else {
+        // Check for optgprs validation
+        if (isOptgprsValid) {
+          setPersonalerror(true);
+        } else {
+          // All validations pass, submit the data
+          postData(convertedFormData)
+            .then(() => {
+              console.log(convertedFormData);
+              setisSubmitted(true);
+            })
+            .catch((error) => {
+              console.error("Error submitting data:", error);
+            });
+        }
+      }
     }
   };
-
+  
+  
   useEffect(() => {
     if (isSubmitted) {
       // Reset the form fields
