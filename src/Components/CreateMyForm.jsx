@@ -191,17 +191,31 @@ const CreateMyForm = () => {
       item.cntxId.toString().length !== 1
   );
   const convertObjectToString = (obj) => {
-    const newObj = {};
-    for (let key in obj) {
-      const newKey = key.toString();
-      const value = obj[key];
-      const newValue =
-        typeof value === 'object' ? convertObjectToString(value) : value.toString();
-      newObj[newKey] = newValue;
+    if (Array.isArray(obj)) {
+      return obj.map((item) => {
+        if (typeof item === 'object' && item !== null) {
+          return convertObjectToString(item);
+        } else {
+          return item.toString();
+        }
+      });
+    } else if (typeof obj === 'object' && obj !== null) {
+      const newObj = {};
+      for (let key in obj) {
+        const newKey = key.toString();
+        const value = obj[key];
+        newObj[newKey] =
+          typeof value === 'object' && value !== null
+            ? convertObjectToString(value)
+            : value.toString();
+      }
+      return newObj;
+    } else {
+      return obj.toString();
     }
-    return newObj;
   };
-
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const convertedFormData = convertObjectToString(data);
