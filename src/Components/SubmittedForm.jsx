@@ -165,8 +165,9 @@ const SubmittedForm = () => {
   // ]
   const [data, setData_1] = useState([])
   const [imsi, setImsi] = useState("")
+  const [search, setSearch] = useState(false)
   useEffect(()=>{
-    axios.get(`https://hldweb-app-crud-service.onrender.com/all-data/${imsi}`).then(
+    axios.get(`https://localhost:5000/all-data/${imsi}`).then(
       res=>setData_1(res.data)
     )
   },[search])
@@ -178,7 +179,7 @@ const SubmittedForm = () => {
   const handleSearchChange_1 = (value)=>{
     setInput_1(value)
   } 
-  const [search, setSearch] = useState(false)
+  
   const handleSearchClick =(e)=>{
     e.preventDefault();
     const filteredData = data.filter((item) => {
