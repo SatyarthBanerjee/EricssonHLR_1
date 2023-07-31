@@ -163,13 +163,16 @@ const SubmittedForm = () => {
     
   // ]
   const [data, setData_1] = useState([])
+  const [imsi, setImsi] = useState("")
   useEffect(()=>{
-    axios.get("https://hldweb-app-crud-service.onrender.com/all-data").then(
+    axios.get(`https://hldweb-app-crud-service.onrender.com/all-data/${imsi}`).then(
       res=>setData_1(res.data)
     )
   },[])
   const handleSearchChange = (value) => {
     setInput(value)
+    setImsi(value)
+
   };
   const handleSearchChange_1 = (value)=>{
     setInput_1(value)
