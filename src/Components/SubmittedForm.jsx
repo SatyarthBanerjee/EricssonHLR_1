@@ -167,7 +167,7 @@ const SubmittedForm = () => {
     axios.get("https://hldweb-app-crud-service.onrender.com/all-data").then(
       res=>setData_1(res.data)
     )
-  })
+  },[])
   const handleSearchChange = (value) => {
     setInput(value)
   };
