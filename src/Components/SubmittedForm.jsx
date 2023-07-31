@@ -166,11 +166,11 @@ const SubmittedForm = () => {
   const [data, setData_1] = useState([])
   const [imsi, setImsi] = useState("")
   const [search, setSearch] = useState(false)
-  useEffect(()=>{
-    axios.get(`https://localhost:5000/all-data/${imsi}`).then(
-      res=>setData_1(res.data)
-    )
-  },[search])
+  // useEffect(()=>{
+  //   // axios.get(`https://localhost:5000/all-data/${imsi}`).then(
+  //   //   res=>setData_1(res.data)
+  //   // )
+  // },[search])
   const handleSearchChange = (value) => {
     setInput(value)
     
@@ -182,6 +182,9 @@ const SubmittedForm = () => {
   
   const handleSearchClick =(e)=>{
     e.preventDefault();
+    axios.get(`https://localhost:5000/data/${imsi}`).then(
+      res=>setData_1(res.data)
+    )
     const filteredData = data.filter((item) => {
       const subscriber = item.GetResponseSubscriber;
       if (!subscriber) return false; // If GetResponseSubscriber is undefined, skip this item
