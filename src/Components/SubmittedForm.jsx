@@ -8,160 +8,166 @@ const SubmittedForm = () => {
   const [input, setInput] = useState("")
   const [input_1, setInput_1] = useState("")
   const [editEnable, setEditEnable]= useState(false)
-  const data= [
-    {
-      GetResponseSubscriber: {
-        imsi: 734025000145829, //Numeric  and length==14
-        msisdn: 584124997370,//Numeric and length= 10
-        hlrsn: 1,//Numeric and length=1
-        cardType: "USIM",//Dropdown
-        nam: "BOTH",
-        services: {
-          clip: {
-            prov: "PROV"//Dropdown
-          },
-          smsmt: "Hello",//Text
-          optgprss: { //min element=1 and max element=5 
-            optgprs: [
-              {
-                prov: true,//Toggle
-                cntxId: 3//numeric 1 digit
-              },
-              {
-                prov: true,
-                cntxId: 5
-              },
-              {
-                prov: true,
-                cntxId: 3
-              },
-              {
-                prov: true,
-                cntxId: 5
-              }
-            ]
-          },
-          odboc: {//dropdown
-            odboc: "BOIC"
-          },
-          odbroam: {//dropdown
-            odbroam: "BROHPLMNC"
-          },
-          category: {//dropdown
-            category: "COMMON"
-          },
-          eps: {//toggle
-            prov: true
-          },
-          smdp: "MSC"//dropdown
-        },
-        rroption: "ALL_PLMNS",//dropdown
-        skey: 0//numeric 0-9
-      }
-    },
-    {
-      GetResponseSubscriber: {
-        imsi: 12345678901234, //Numeric  and length==14
-        msisdn: 1234568990,//Numeric and length= 10
-        hlrsn: 2,//Numeric and length=1
-        cardType: "USIM",//Dropdown
-        nam: "BOTH",
-        services: {
-          clip: {
-            prov: "PROV"//Dropdown
-          },
-          smsmt: "Hello",//Text
-          optgprss: { //min element=1 and max element=5 
-            optgprs: [
-              {
-                prov: true,//Toggle
-                cntxId: 3//numeric 1 digit
-              },
-              {
-                prov: true,
-                cntxId: 5
-              },
-              {
-                prov: true,
-                cntxId: 3
-              },
-              {
-                prov: true,
-                cntxId: 5
-              }
-            ]
-          },
-          odboc: {//dropdown
-            odboc: "BOIC"
-          },
-          odbroam: {//dropdown
-            odbroam: "BROHPLMNC"
-          },
-          category: {//dropdown
-            category: "COMMON"
-          },
-          eps: {//toggle
-            prov: true
-          },
-          smdp: "MSC"//dropdown
-        },
-        rroption: "ALL_PLMNS",//dropdown
-        skey: 1//numeric 0-9
-      }
-    },
-    {
-      GetResponseSubscriber: {
-        imsi: 79348043978052, //Numeric  and length==14
-        msisdn: 2905293403,//Numeric and length= 10
-        hlrsn: 3,//Numeric and length=1
-        cardType: "USIM",//Dropdown
-        nam: "BOTH",
-        services: {
-          clip: {
-            prov: "PROV"//Dropdown
-          },
-          smsmt: "Hello",//Text
-          optgprss: { //min element=1 and max element=5 
-            optgprs: [
-              {
-                prov: false,//Toggle
-                cntxId: 1//numeric 1 digit
-              },
-              {
-                prov: true,
-                cntxId: 5
-              },
-              {
-                prov: false,
-                cntxId: 2
-              },
-              {
-                prov: true,
-                cntxId: 5
-              }
-            ]
-          },
-          odboc: {//dropdown
-            odboc: "BOIC"
-          },
-          odbroam: {//dropdown
-            odbroam: "BROHPLMNC"
-          },
-          category: {//dropdown
-            category: "COMMON"
-          },
-          eps: {//toggle
-            prov: true
-          },
-          smdp: "MSC"//dropdown
-        },
-        rroption: "ALL_PLMNS",//dropdown
-        skey: 3//numeric 0-9
-      }
-    },
+  // const data= [
+  //   {
+  //     GetResponseSubscriber: {
+  //       imsi: 734025000145829, //Numeric  and length==14
+  //       msisdn: 584124997370,//Numeric and length= 10
+  //       hlrsn: 1,//Numeric and length=1
+  //       cardType: "USIM",//Dropdown
+  //       nam: "BOTH",
+  //       services: {
+  //         clip: {
+  //           prov: "PROV"//Dropdown
+  //         },
+  //         smsmt: "Hello",//Text
+  //         optgprss: { //min element=1 and max element=5 
+  //           optgprs: [
+  //             {
+  //               prov: true,//Toggle
+  //               cntxId: 3//numeric 1 digit
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 3
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             }
+  //           ]
+  //         },
+  //         odboc: {//dropdown
+  //           odboc: "BOIC"
+  //         },
+  //         odbroam: {//dropdown
+  //           odbroam: "BROHPLMNC"
+  //         },
+  //         category: {//dropdown
+  //           category: "COMMON"
+  //         },
+  //         eps: {//toggle
+  //           prov: true
+  //         },
+  //         smdp: "MSC"//dropdown
+  //       },
+  //       rroption: "ALL_PLMNS",//dropdown
+  //       skey: 0//numeric 0-9
+  //     }
+  //   },
+  //   {
+  //     GetResponseSubscriber: {
+  //       imsi: 12345678901234, //Numeric  and length==14
+  //       msisdn: 1234568990,//Numeric and length= 10
+  //       hlrsn: 2,//Numeric and length=1
+  //       cardType: "USIM",//Dropdown
+  //       nam: "BOTH",
+  //       services: {
+  //         clip: {
+  //           prov: "PROV"//Dropdown
+  //         },
+  //         smsmt: "Hello",//Text
+  //         optgprss: { //min element=1 and max element=5 
+  //           optgprs: [
+  //             {
+  //               prov: true,//Toggle
+  //               cntxId: 3//numeric 1 digit
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 3
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             }
+  //           ]
+  //         },
+  //         odboc: {//dropdown
+  //           odboc: "BOIC"
+  //         },
+  //         odbroam: {//dropdown
+  //           odbroam: "BROHPLMNC"
+  //         },
+  //         category: {//dropdown
+  //           category: "COMMON"
+  //         },
+  //         eps: {//toggle
+  //           prov: true
+  //         },
+  //         smdp: "MSC"//dropdown
+  //       },
+  //       rroption: "ALL_PLMNS",//dropdown
+  //       skey: 1//numeric 0-9
+  //     }
+  //   },
+  //   {
+  //     GetResponseSubscriber: {
+  //       imsi: 79348043978052, //Numeric  and length==14
+  //       msisdn: 2905293403,//Numeric and length= 10
+  //       hlrsn: 3,//Numeric and length=1
+  //       cardType: "USIM",//Dropdown
+  //       nam: "BOTH",
+  //       services: {
+  //         clip: {
+  //           prov: "PROV"//Dropdown
+  //         },
+  //         smsmt: "Hello",//Text
+  //         optgprss: { //min element=1 and max element=5 
+  //           optgprs: [
+  //             {
+  //               prov: false,//Toggle
+  //               cntxId: 1//numeric 1 digit
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             },
+  //             {
+  //               prov: false,
+  //               cntxId: 2
+  //             },
+  //             {
+  //               prov: true,
+  //               cntxId: 5
+  //             }
+  //           ]
+  //         },
+  //         odboc: {//dropdown
+  //           odboc: "BOIC"
+  //         },
+  //         odbroam: {//dropdown
+  //           odbroam: "BROHPLMNC"
+  //         },
+  //         category: {//dropdown
+  //           category: "COMMON"
+  //         },
+  //         eps: {//toggle
+  //           prov: true
+  //         },
+  //         smdp: "MSC"//dropdown
+  //       },
+  //       rroption: "ALL_PLMNS",//dropdown
+  //       skey: 3//numeric 0-9
+  //     }
+  //   },
     
     
-  ]
+  // ]
+  const [data, setData_1] = useState([])
+  useEffect(()=>{
+    axios.get("https://hldweb-app-crud-service.onrender.com/all-data").then(
+      res=>setData_1(res.data)
+    )
+  })
   const handleSearchChange = (value) => {
     setInput(value)
   };
