@@ -171,7 +171,7 @@ const SubmittedForm = () => {
   },[])
   const handleSearchChange = (value) => {
     setInput(value)
-    setImsi(value)
+    
 
   };
   const handleSearchChange_1 = (value)=>{
@@ -192,6 +192,8 @@ const SubmittedForm = () => {
     setInput("")
     setInput_1("")
     setEditEnable(true)
+
+    setImsi(input)
   }
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
