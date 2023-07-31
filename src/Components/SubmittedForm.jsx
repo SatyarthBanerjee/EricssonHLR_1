@@ -182,7 +182,9 @@ const SubmittedForm = () => {
   
   const handleSearchClick =(e)=>{
     e.preventDefault();
-    axios.get(`https://localhost:5000/data/${imsi}`).then(
+    console.log(input);
+    axios.get(`http://localhost:5000/data/${input}`)
+    .then(
       res=>setData_1(res.data)
     )
     const filteredData = data.filter((item) => {
