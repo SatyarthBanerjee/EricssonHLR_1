@@ -2,6 +2,7 @@ import { isDisabled } from '@testing-library/user-event/dist/utils'
 import React, { useState, useEffect } from 'react'
 import Navbar from './Navbar'
 import { Switch } from 'antd'
+import axios from 'axios'
 
 const SubmittedForm = () => {
   const [searchResults, setsearchResults]= useState([])
@@ -168,7 +169,7 @@ const SubmittedForm = () => {
     axios.get(`https://hldweb-app-crud-service.onrender.com/all-data/${imsi}`).then(
       res=>setData_1(res.data)
     )
-  },[])
+  },[search])
   const handleSearchChange = (value) => {
     setInput(value)
     
@@ -177,6 +178,7 @@ const SubmittedForm = () => {
   const handleSearchChange_1 = (value)=>{
     setInput_1(value)
   } 
+  const [search, setSearch] = useState(false)
   const handleSearchClick =(e)=>{
     e.preventDefault();
     const filteredData = data.filter((item) => {
@@ -192,7 +194,7 @@ const SubmittedForm = () => {
     setInput("")
     setInput_1("")
     setEditEnable(true)
-
+    setSearch(true)
     setImsi(input)
   }
   const handleSearchKeyDown = (e) => {
