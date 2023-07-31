@@ -36,7 +36,7 @@
   display: flex;
   justify-content:center ;
   align-items: center;
-  gap: 10px
+  gap: 10px 
 }
 .createbtn{
   height: 40px;
@@ -350,4 +350,186 @@ select{
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
+}
+.searchData{
+  background-color: #fff;
+  width:100%;
+  height: 100vh;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
+}
+.search{
+  width: 200px;
+  height: 30px;
+  padding-left: 20px;
+  transition: 0.2s;
+  border-radius: 12px;
+  border-style: none;
+  background-color: #d3d3d3;
+}
+.search:focus{
+  outline: none
+}
+.searchResults{
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  width: 1200px;
+  overflow-y: scroll;
+  height: 400px;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px
+}
+.searchResults::-webkit-scrollbar{
+  display: none;
+}
+.searchResults input{
+  width: 150px;
+  background-color: #fff;
+  padding-left: 10px;
+  border-radius: 8px;
+  border-style: none;
+}
+.searchResults input:focus{
+  outline: none;
+}
+.searchResults select{
+  width: 150px;
+  border-bottom: 2px solid #000;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background-color: transparent;
+}
+.searchData p{
+  color: #fff
+}
+.searchfield{
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  gap: 15px
+}
+.searchfield button {
+  width: 50px;
+}
+.resultField{
+  margin-top: 10px;
+}
+.searchbtn{
+  height: 30px;
+  background-color: transparent;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid black
+}
+.searchbtn:hover{
+  box-shadow: 0 0 5px #fff;
+}
+.search:focus{
+  box-shadow: 0 0 10px #fff;
+}
+.submformfp{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.submservices{
+  display: flex;
+  justify-content: space-between;
+  background-color: #d3d3d3;
+  padding: 20px;
+  border-radius: 12px;
+
+}
+.rightoptgrs{
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 12px;
+  justify-content: center;
+  width: 400px;
+  padding-left: 30px;
+  
+}
+.leftside{
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  border-radius: 12px;
+  width: 400px;
+  color: black;
+  justify-content: start;
+  gap: 10px
+}
+.leftcont{
+  display: flex;
+  justify-content: space-between;
+}
+.leftcont p{
+  color: #000;
+}
+.rcont{
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  gap: 15px
+}
+.rcont input{
+  background-color: #d3d3d3;
+  width: 80px;
+  height: 20px;
+}
+.rcont p{
+  color: #000;
+}
+.allbtns{
+  display: flex;
+  flex-grow: 1;
+  margin-top: 10px;
+  gap: 10px;
+  
+
+
+}
+.allbtns button{
+  height: 30px;
+  width: 50px;
+  border-radius: 8px;
+  border-style: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+.submformfp{
+  background-color: #d3d3d3;
+  border-radius: 12px;
+  padding: 40px 10px 40px 10px;
+  color: black
+}
+.submformfp p{
+  color: black;
+}
+
+.subaddbutton{
+  font-size: 25px;
+  background-color: #d3d3d3;;
+  cursor: pointer;
+  border-style: none;
+  color: black;
+  border-radius: 50%;
+  height: 20px;
+  width: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  margin-left: 40%;
+}
+.searchResults p{
+  color: #000
 }
