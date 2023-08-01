@@ -201,7 +201,7 @@ const SubmittedForm = () => {
           subscriber.msisdn.toString().includes(input_1))
       );
     });
-    setsearchResults(filteredData);
+    setsearchResults(filteredData.map(item => ({ GetResponseSubscriber: item.GetResponseSubscriber })));
     setInput("");
     setInput_1("");
     setEditEnable(true);
