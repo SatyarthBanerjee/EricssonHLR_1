@@ -188,7 +188,8 @@ const SubmittedForm = () => {
     // });
     let res = await axios.get(`http://localhost:5000/data/${input}`)
     console.log(res.data);
-    setData_1(res.data)
+    setData_1([res.data])
+    console.log(data)
     const filteredData = data.filter((item) => {
       const subscriber = item.GetResponseSubscriber;
       if (!subscriber) return false; // If GetResponseSubscriber is undefined, skip this item
