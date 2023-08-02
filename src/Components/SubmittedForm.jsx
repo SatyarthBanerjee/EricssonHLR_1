@@ -186,21 +186,11 @@ const SubmittedForm = () => {
     //   console.log(res);
     //   setData_1(res.data);
     // });
-    let res = await axios.get(`http://localhost:5000/data/${input}`)
+    let res = await axios.get(`http://localhost:2000/data/${input}`)
     console.log(res.data);
-    setData_1((prevData=>[...prevData, res.data]))
-    const filteredData = data.filter((item) => {
-      const subscriber = item.GetResponseSubscriber;
-      if (!subscriber) return false; // If GetResponseSubscriber is undefined, skip this item
-
-      return (
-        (subscriber.imsi === parseInt(input) &&
-          subscriber.imsi.toString().includes(input)) ||
-        (subscriber.msisdn === parseInt(input_1) &&
-          subscriber.msisdn.toString().includes(input_1))
-      );
-    });
-    setsearchResults(filteredData.map(item => ({ GetResponseSubscriber: item.GetResponseSubscriber })));
+    setData_1([res.data])
+    console.log(data);
+    setsearchResults(data);
     setInput("");
     setInput_1("");
     setEditEnable(true);
@@ -256,7 +246,7 @@ const SubmittedForm = () => {
         {searchResults.length === 0 ? (
           <p>Type IMSI or MSISDN</p>
         ) : (
-          searchResults.map((data, index) => (
+          data.map((data, index) => (
             <div className="searchResults" key={index}>
               <div className="submformfp">
                 <p>Imsi: </p>
