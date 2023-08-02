@@ -533,3 +533,37 @@ select{
 .searchResults p{
   color: #000
 }
+/* Example Media Query */
+@media (max-width: 576px) {
+  .rightnav{
+    display: none;
+  }
+  .nav{
+    justify-content: center;
+  }
+
+}
+/* Example Media Query */
+@media (max-width: 768px) {
+  .createMyForm{
+    width: 600px
+}
+.firstrowform{
+  width: 90%;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 12px;
+}
+.firstrowform input{
+  height: 5px;
+  width: 50px;
+}
+.firstrowform select{
+  width: 50px;
+}
+.firstrowform p{
+  text-align: left!important;
+  font-size: 10px;
+}
+}
+
