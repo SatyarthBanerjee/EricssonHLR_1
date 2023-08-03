@@ -1,16 +1,14 @@
-// const { createProxyMiddleware } = require('http-proxy-middleware');
-import { createProxyMiddleware } from 'http-proxy-middleware';
+// // const { createProxyMiddleware } = require('http-proxy-middleware');
+// import { createProxyMiddleware } from 'http-proxy-middleware';
 
-module.exports = function (app) {
-  app.use(
+// module.exports = function (app) {
+//   app.use(
     
-    createProxyMiddleware('/api',{
-      target: 
-      // 'https://hldweb-app-crud-service.onrender.com',
-      "http://localhost:5000",
-      changeOrigin: true,
-      // rewrite: (path) => path.replace(/^\/api/, ""),
-      pathRewrite: { "/^\/api/":"",}
-    })
-  );
-};
+//     createProxyMiddleware('/api',{
+//       target: 'https://hldweb-app-crud-service.onrender.com', // Replace with your server URL
+//       changeOrigin: true,
+//       // rewrite: (path) => path.replace(/^\/api/, ""),
+//       pathRewrite: { "/^\/api/":"",}
+//     })
+//   );
+// };

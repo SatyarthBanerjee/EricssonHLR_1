@@ -190,13 +190,15 @@ const SubmittedForm = () => {
     console.log(res.data);
     setData_1([res.data])
     console.log(data);
-    setsearchResults(data);
     setInput("");
     setInput_1("");
     setEditEnable(true);
     setSearch(true);
     setImsi(input);
   };
+  useEffect(()=>{
+    setsearchResults(data);
+  },[data])
   const handleSearchKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearchClick(e);
@@ -246,7 +248,7 @@ const SubmittedForm = () => {
         {searchResults.length === 0 ? (
           <p>Type IMSI or MSISDN</p>
         ) : (
-          data.map((data, index) => (
+          searchResults.map((data, index) => (
             <div className="searchResults" key={index}>
               <div className="submformfp">
                 <p>Imsi: </p>
