@@ -186,7 +186,7 @@ const SubmittedForm = () => {
     //   console.log(res);
     //   setData_1(res.data);
     // });
-    let res = await axios.get(`http://localhost:2000/data/${input}`)
+    let res = await axios.get(`http://localhost:5000/data/${input}`)
     console.log(res.data);
     setData_1([res.data])
     console.log(data);
@@ -221,6 +221,60 @@ const SubmittedForm = () => {
   const enableCancel = () => {
     setEnable(true);
   };
+  const handleChange = (field, nestedField, nestedField_2, value) => {
+    const updatedData = [...data];
+    if (nestedField) {
+      if (nestedField_2) {
+        updatedData[0].GetResponseSubscriber[field][nestedField][nestedField_2] = value;
+      } else {
+        updatedData[0].GetResponseSubscriber[field][nestedField] = value;
+      }
+    } else {
+      updatedData[0].GetResponseSubscriber[field] = value;
+    }
+    setData_1(updatedData);
+  };
+  const handleSwitch = (id) => {
+    const updatedData = [...data];
+    updatedData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov = !updatedData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov;
+    setData_1(updatedData);
+  };
+  const handleSwitch_2 = () => {
+    const updatedData = [...data];
+    updatedData[0].GetResponseSubscriber.services.eps.prov = !updatedData[0].GetResponseSubscriber.services.eps.prov;
+    setData_1(updatedData);
+  };
+  const handleChange_1 = (e, index, field) => {
+    const { value } = e.target;
+    setData_1(prevData => {
+      const newData = [...prevData];
+      newData[index].GetResponseSubscriber.services.optgprss.optgprs[field].cntxId = value;
+      return newData;
+    });
+  };
+  const handleDelete = (id) => {
+    setData_1((prevData) => {
+      const newData = [...prevData];
+      newData[0].GetResponseSubscriber.services.optgprss.optgprs.splice(id, 1);
+      return newData;
+    });
+  };
+  const handleUpdateData = async () => {
+    try {
+      const imsiNumber = data[0].GetResponseSubscriber.imsi;
+      await axios.put(`http://localhost:5000/data/${imsiNumber}`, data[0]);
+      console.log("Data updated successfully!");
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleUpdateData();
+    setEditEnable(true);
+  };
+  
+
 
   return (
     <div className="searchData">
@@ -254,28 +308,48 @@ const SubmittedForm = () => {
                 <p>Imsi: </p>
                 <input
                   value={data.GetResponseSubscriber?.imsi}
-                  disabled={enable}
+                  disabled={true}
                 ></input>
                 <p>Msisdn: </p>
                 <input
                   value={data.GetResponseSubscriber?.msisdn}
-                  disabled={enable}
+                  disabled={true}
+
                 ></input>
                 <p>hlrsn: </p>
                 <input
                   value={data.GetResponseSubscriber?.hlrsn}
                   disabled={enable}
+                  onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
                 ></input>
                 <p>CardTyp: </p>
-                <select disabled={enable}>
-                  <option value={data.GetResponseSubscriber?.cardType}>
-                    {data.GetResponseSubscriber?.cardType}
+                <select  value={data.GetResponseSubscriber?.cardType} disabled={enable}  onChange={e => { handleChange('cardType', null, null, e.target.value) }}>
+                  <option>
+                    **{data.GetResponseSubscriber?.cardType}**
+                  </option>
+                  <option value="option1">
+                    OPT1
+                  </option>
+                  <option value="option2">
+                    OP2
+                  </option>
+                  <option value="option3">
+                    OP3
                   </option>
                 </select>
                 <p>Nam: </p>
-                <select disabled={enable}>
-                  <option value={data.GetResponseSubscriber?.nam}>
-                    {data.GetResponseSubscriber?.nam}
+                <select value={data.GetResponseSubscriber?.nam} disabled={enable} onChange={e => { handleChange('nam', null, null, e.target.value) }}>
+                  <option>
+                    **{data.GetResponseSubscriber?.nam}**
+                  </option>
+                  <option value="option1">
+                    OPT1
+                  </option>
+                  <option value="option2">
+                    OPT2
+                  </option>
+                  <option value="option3">
+                    OPT3
                   </option>
                 </select>
               </div>
@@ -284,12 +358,21 @@ const SubmittedForm = () => {
                 <div className="leftside">
                   <div className="leftcont">
                     <p>Clip: </p>
-                    <select disabled={enable}>
-                      <option
-                        value={data.GetResponseSubscriber?.services?.clip?.prov}
-                      >
-                        {data.GetResponseSubscriber?.services?.clip?.prov}
+                    <select value={data.GetResponseSubscriber?.services?.clip?.prov} disabled={enable} onChange={e => { handleChange('services', 'clip', 'prov', e.target.value) }}>
+                      <option>
+                        **{data.GetResponseSubscriber?.services?.clip?.prov}**
                       </option>
+                      <option
+                        value="option1"
+                      >
+                        OPT1
+                      </option>
+                      <option
+                      value="option2"
+                      >OPT2</option>
+                       <option
+                      value="option3"
+                      >OPT3</option>
                     </select>
                   </div>
                   <div className="leftcont">
@@ -297,46 +380,55 @@ const SubmittedForm = () => {
                     <input
                       value={data.GetResponseSubscriber?.services?.smsmt}
                       disabled={enable}
+                      onChange={e => { handleChange('services', 'smsmt', null, e.target.value) }}
                     ></input>
                   </div>
                   <div className="leftcont">
                     <p>ODBOC</p>
-                    <select disabled={enable}>
-                      <option
-                        value={
-                          data.GetResponseSubscriber?.services?.odboc?.odboc
-                        }
-                      >
-                        {data.GetResponseSubscriber?.services?.odboc?.odboc}
+                    <select   value={data.GetResponseSubscriber?.services?.odboc?.odboc} disabled={enable} onChange={e => handleChange("services", "odboc", "odboc", e.target.value)}>
+                      <option>
+                        **{data.GetResponseSubscriber?.services?.odboc?.odboc}**
+                      </option>
+                      <option value="option1">
+                        OPT1
+                      </option>
+                      <option value="option2">
+                        OPT2
+                      </option>
+                      <option value="option3">
+                        OPT3
                       </option>
                     </select>
                   </div>
                   <div className="leftcont">
                     <p>ODBROAM</p>
-                    <select disabled={enable}>
-                      <option
-                        value={
-                          data.GetResponseSubscriber?.services?.odbroam?.odbroam
-                        }
-                      >
-                        {data.GetResponseSubscriber?.services?.odbroam?.odbroam}
+                    <select value={data.GetResponseSubscriber?.services?.odbroam?.odbroam} disabled={enable} onChange={e => handleChange("services", "odbroam", "odbroam", e.target.value)}>
+                      <option>
+                        **{data.GetResponseSubscriber?.services?.odbroam?.odbroam}**
+                      </option>
+                      <option value="option1">
+                        OPT1
+                      </option>
+                      <option value="option2">
+                        OPT2
+                      </option>
+                      <option value="option3">
+                        OPT3
                       </option>
                     </select>
                   </div>
                   <div className="leftcont">
                     <p>Category</p>
-                    <select disabled={enable}>
-                      <option
-                        value={
+                    <select value={ data.GetResponseSubscriber?.services?.category?.category} disabled={enable} onChange={e => handleChange("services", "category", "category", e.target.value)}>
+                      <option>
+                       ** {
                           data.GetResponseSubscriber?.services?.category
                             ?.category
-                        }
-                      >
-                        {
-                          data.GetResponseSubscriber?.services?.category
-                            ?.category
-                        }
+                        }**
                       </option>
+                      <option value="option1">OPT1</option>
+                      <option value="option2">OPT2</option>
+                      <option value="option3">OPT3</option>
                     </select>
                   </div>
                   <div className="leftcont">
@@ -347,17 +439,20 @@ const SubmittedForm = () => {
                           data.GetResponseSubscriber?.services?.eps?.prov
                         }
                         disabled={enable}
+                        onChange={handleSwitch_2}
                       />
                     </div>
                   </div>
                   <div className="leftcont">
                     <p>SMDP: </p>
-                    <select disabled={enable}>
-                      <option
-                        value={data.GetResponseSubscriber?.services?.smdp}
-                      >
-                        {data.GetResponseSubscriber?.services?.smdp}
+                    <select value={data.GetResponseSubscriber?.services?.smdp} disabled={enable} onChange={e => handleChange("services", "smdp", null, e.target.value)}>
+                      <option>
+                        **{data.GetResponseSubscriber?.services?.smdp}**
                       </option>
+                      <option value="option1">OPT1</option>
+                      <option value="option2">OPT2</option>
+                      <option value="option3">OPT3</option>
+                      
                     </select>
                   </div>
                 </div>
@@ -373,14 +468,14 @@ const SubmittedForm = () => {
                       return (
                         <div className="rcont" key={id}>
                           <p>PROV</p>
-                          <Switch checked={item.prov} disabled={enable} />
+                          <Switch checked={item.prov} disabled={enable} onChange={() => handleSwitch(id)} />
                           <p>CNTXID</p>
-                          <input disabled={enable} value={item.cntxId}></input>
+                          <input disabled={enable} value={item.cntxId} onChange={e => handleChange_1(e, id, 'cntxId')}></input>
                           <img
                             className="deletebutton"
                             src="/Images/delete.png"
                             alt="Delete"
-                            // onClick={() => handleDelete(index)}
+                            onClick={() => handleDelete(id)}
                           />
                         </div>
                       );
@@ -389,15 +484,19 @@ const SubmittedForm = () => {
                 </div>
               </div>
               <p>RROPTION</p>
-              <select disabled={enable}>
-                <option value={data.GetResponseSubscriber?.rroption}>
-                  {data.GetResponseSubscriber?.rroption}
+              <select value={data.GetResponseSubscriber?.rroption} disabled={enable} onChange={e => handleChange("rroption", null, null, e.target.value)}>
+                <option>
+                  **{data.GetResponseSubscriber?.rroption}**
                 </option>
+                <option value="option1">OPT1</option>
+                <option value="option2">OPT2</option>
+                <option value="option3">OPT3</option>
               </select>
               <p>SKEY: </p>
               <input
                 disabled={enable}
                 value={data.GetResponseSubscriber?.skey}
+                onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
               ></input>
             </div>
           ))
@@ -407,7 +506,7 @@ const SubmittedForm = () => {
         {editEnable === true ? (
           <>
             <button onClick={enableEdit}>Edit</button>
-            <button disabled={enable}>Update</button>
+            <button disabled={enable} onClick={handleFormSubmit}>Update</button>
             <button onClick={enableCancel} disabled={enable}>
               Cancel
             </button>

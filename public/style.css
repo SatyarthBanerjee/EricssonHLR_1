@@ -58,6 +58,7 @@
   margin-top: 350px;
   max-height: 500px;
   overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 30px;
   border-radius: 12px;
   /* box-shadow: 0 0 15px #6b6c6e; */
@@ -260,7 +261,7 @@ label{
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  width: 500px;
+  width: 95%;
   text-align: left;
   padding: 10px;
   gap: 10px;
@@ -541,6 +542,48 @@ select{
   .nav{
     justify-content: center;
   }
+ 
+}
+@media (max-width: 414px) {
+  .createMyForm{
+    max-width: 300px
+}
+.firstrowform{
+  width: 90%;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 12px;
+}
+.firstrowform input{
+  height: 5px;
+  width: 50px;
+}
+.firstrowform select{
+  width: 50px;
+}
+.firstrowform p{
+  text-align: left!important;
+  font-size: 10px;
+}
+.services{
+  flex-direction: column;
+  max-width: 90%;
+  gap: 1.5em;
+}
+.leftservices{
+  max-width: 300px;
+}
+.leftservices p{
+  padding-top: 4px;
+}
+.optgprs{
+  padding: 10px;
+  max-width: 100%;
+  border-radius: 12px;
+}
+.lastPart{
+  max-width: 90%;
+}
 
 }
 /* Example Media Query */
