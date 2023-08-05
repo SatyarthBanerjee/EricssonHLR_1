@@ -248,7 +248,7 @@ const SubmittedForm = () => {
     const { value } = e.target;
     setData_1(prevData => {
       const newData = [...prevData];
-      newData[index].GetResponseSubscriber.services.optgprss.optgprs[field].cntxId = value;
+      newData[index].GetResponseSubscriber.services.optgprss.optgprs[field] = value;
       return newData;
     });
   };
