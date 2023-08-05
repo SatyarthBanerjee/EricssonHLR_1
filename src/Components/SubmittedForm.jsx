@@ -277,14 +277,12 @@ const SubmittedForm = () => {
   const handleUpdateData = async () => {
     try {
       const imsiNumber = data[0].GetResponseSubscriber.imsi;
-      const jsonData = JSON.stringify(data[0]); // Convert data to JSON string
-      await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, jsonData);
+      await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, data[0]);
       console.log("Data updated successfully!");
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
-  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleUpdateData();
