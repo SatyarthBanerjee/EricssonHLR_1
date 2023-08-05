@@ -288,7 +288,7 @@ const SubmittedForm = () => {
     handleUpdateData();
     setEditEnable(true);
   };
-  const handleAdd = useCallback(() => {
+  const handleAdd = ()=> {
     setData_1((prevData) => {
       const newData = { ...prevData[0] };
       const optgprs = newData.GetResponseSubscriber.services.optgprss.optgprs;
@@ -301,7 +301,7 @@ const SubmittedForm = () => {
       }
       return [newData];
     });
-  }, []);
+  }
   
 
 
