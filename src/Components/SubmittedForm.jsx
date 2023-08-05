@@ -1,5 +1,5 @@
 import { isDisabled } from "@testing-library/user-event/dist/utils";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Navbar from "./Navbar";
 import { Switch } from "antd";
 import axios from "axios";
@@ -176,6 +176,21 @@ const SubmittedForm = () => {
   const handleSearchChange_1 = (value) => {
     setInput_1(value);
   };
+  const parseData = (data)=>{
+    const newData = {...data.GetResponseSubscriber};
+    newData.imsi = parseInt(newData.imsi);
+    newData.msisdn = parseInt(newData.msisdn);
+    newData.hlrsn = parseInt(newData.hlrsn);
+    newData.skey = parseInt(newData.skey);
+
+    newData.services.eps.prov = newData.services.eps.prov==="true";
+    newData.services.optgprss.optgprs = newData.services.optgprss.optgprs.map(item=>({
+      ...item,
+      prov: item.prov === "true",
+      cntxId: parseInt(item.cntxId)
+    }));
+    return newData;
+  }
 
   const handleSearchClick = async (e) => {
     e.preventDefault();
@@ -188,7 +203,7 @@ const SubmittedForm = () => {
     // });
     let res = await axios.get(`http://localhost:5000/data/${input}`)
     console.log(res.data);
-    setData_1([res.data])
+    setData_1([parseData(res.data)])
     console.log(data);
     setInput("");
     setInput_1("");
@@ -262,32 +277,33 @@ const SubmittedForm = () => {
   const handleUpdateData = async () => {
     try {
       const imsiNumber = data[0].GetResponseSubscriber.imsi;
-      await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, data[0]);
+      const jsonData = JSON.stringify(data[0]); // Convert data to JSON string
+      await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, jsonData);
       console.log("Data updated successfully!");
     } catch (error) {
       console.error("Error updating data:", error);
     }
   };
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleUpdateData();
     setEditEnable(true);
   };
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     setData_1((prevData) => {
-      const newData = { ...prevData[0] }; 
+      const newData = { ...prevData[0] };
       const optgprs = newData.GetResponseSubscriber.services.optgprss.optgprs;
 
-      
       if (optgprs.length < 5) {
         optgprs.push({
-          prov: true, 
-          cntxId: 0, 
+          prov: false,
+          cntxId: null,
         });
       }
       return [newData];
     });
-  };
+  }, []);
   
 
 
