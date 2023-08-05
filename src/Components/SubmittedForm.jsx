@@ -248,7 +248,7 @@ const SubmittedForm = () => {
     const { value } = e.target;
     setData_1(prevData => {
       const newData = [...prevData];
-      newData[index].GetResponseSubscriber.services.optgprss.optgprs[field] = value;
+      newData[0].GetResponseSubscriber.services.optgprss.optgprs[index][field] = value;
       return newData;
     });
   };
@@ -272,6 +272,21 @@ const SubmittedForm = () => {
     e.preventDefault();
     handleUpdateData();
     setEditEnable(true);
+  };
+  const handleAdd = () => {
+    setData_1((prevData) => {
+      const newData = { ...prevData[0] }; 
+      const optgprs = newData.GetResponseSubscriber.services.optgprss.optgprs;
+
+      
+      if (optgprs.length < 5) {
+        optgprs.push({
+          prov: true, 
+          cntxId: 0, 
+        });
+      }
+      return [newData];
+    });
   };
   
 
@@ -459,7 +474,7 @@ const SubmittedForm = () => {
                 <div className="rightoptgrs">
                   {data.GetResponseSubscriber.services.optgprss.optgprs
                     .length !== 5 ? (
-                    <button className="subaddbutton">+</button>
+                    <button onClick={handleAdd} className="subaddbutton">+</button>
                   ) : (
                     <button className="subaddbuttondisabled">+</button>
                   )}
