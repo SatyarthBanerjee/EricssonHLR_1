@@ -277,7 +277,7 @@ const SubmittedForm = () => {
   const handleUpdateData = async () => {
     try {
       const imsiNumber = data[0].GetResponseSubscriber.imsi;
-      await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, data[0]);
+      await axios.put(`http://${process.env.ENDPOINT}:${process.env.PORT}/${imsiNumber}`, data[0]);
       console.log("Data updated successfully!");
     } catch (error) {
       console.error("Error updating data:", error);
@@ -486,7 +486,7 @@ const SubmittedForm = () => {
                   </div>
                 </div>
                 <div className="rightoptgrs">
-                  {data.GetResponseSubscriber.services.optgprss.optgprs
+                  {data.GetResponseSubscriber?.services?.optgprss?.optgprs
                     .length !== 5 ? (
                     <button onClick={handleAdd} className="subaddbutton">+</button>
                   ) : (
