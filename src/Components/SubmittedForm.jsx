@@ -176,21 +176,6 @@ const SubmittedForm = () => {
   const handleSearchChange_1 = (value) => {
     setInput_1(value);
   };
-  const parseData = (data)=>{
-    const newData = {...data.GetResponseSubscriber};
-    newData.imsi = parseInt(newData.imsi);
-    newData.msisdn = parseInt(newData.msisdn);
-    newData.hlrsn = parseInt(newData.hlrsn);
-    newData.skey = parseInt(newData.skey);
-
-    newData.services.eps.prov = newData.services.eps.prov==="true";
-    newData.services.optgprss.optgprs = newData.services.optgprss.optgprs.map(item=>({
-      ...item,
-      prov: item.prov === "true",
-      cntxId: parseInt(item.cntxId)
-    }));
-    return newData;
-  }
 
   const handleSearchClick = async (e) => {
     e.preventDefault();
@@ -203,7 +188,7 @@ const SubmittedForm = () => {
     // });
     let res = await axios.get(`http://localhost:5000/data/${input}`)
     console.log(res.data);
-    setData_1([parseData(res.data)])
+    setData_1([res.data]);
     console.log(data);
     setInput("");
     setInput_1("");
@@ -288,22 +273,22 @@ const SubmittedForm = () => {
     handleUpdateData();
     setEditEnable(true);
   };
-  const handleAdd = ()=> {
+  const handleAdd = useCallback(() => {
     setData_1((prevData) => {
       const newData = { ...prevData[0] };
-      const optgprs = newData.GetResponseSubscriber.services.optgprss.optgprs;
-
+      const optgprs = [...newData.GetResponseSubscriber.services.optgprss.optgprs];
+  
       if (optgprs.length < 5) {
         optgprs.push({
           prov: false,
           cntxId: null,
         });
       }
+      newData.GetResponseSubscriber.services.optgprss.optgprs = optgprs;
       return [newData];
     });
-  }
+  }, []);
   
-
 
   return (
     <div className="searchData">
@@ -347,6 +332,7 @@ const SubmittedForm = () => {
                 ></input>
                 <p>hlrsn: </p>
                 <input
+                  type ="number"
                   value={data.GetResponseSubscriber?.hlrsn}
                   disabled={enable}
                   onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
@@ -465,7 +451,7 @@ const SubmittedForm = () => {
                     <div className="eps">
                       <Switch
                         checked={
-                          data.GetResponseSubscriber?.services?.eps?.prov
+                          JSON.parse(data.GetResponseSubscriber?.services?.eps?.prov)
                         }
                         disabled={enable}
                         onChange={handleSwitch_2}
@@ -488,7 +474,7 @@ const SubmittedForm = () => {
                 <div className="rightoptgrs">
                   {data.GetResponseSubscriber.services.optgprss.optgprs
                     .length !== 5 ? (
-                    <button onClick={handleAdd} className="subaddbutton">+</button>
+                    <button disabled={enable} onClick={handleAdd} className="subaddbutton">+</button>
                   ) : (
                     <button className="subaddbuttondisabled">+</button>
                   )}
@@ -497,15 +483,15 @@ const SubmittedForm = () => {
                       return (
                         <div className="rcont" key={id}>
                           <p>PROV</p>
-                          <Switch checked={item.prov} disabled={enable} onChange={() => handleSwitch(id)} />
+                          <Switch checked={JSON.parse(item.prov)} disabled={enable} onChange={() => handleSwitch(id)} />
                           <p>CNTXID</p>
                           <input disabled={enable} value={item.cntxId} onChange={e => handleChange_1(e, id, 'cntxId')}></input>
-                          <img
+                          {!enable?<img
                             className="deletebutton"
                             src="/Images/delete.png"
                             alt="Delete"
                             onClick={() => handleDelete(id)}
-                          />
+                          />:null}
                         </div>
                       );
                     }
@@ -523,6 +509,7 @@ const SubmittedForm = () => {
               </select>
               <p>SKEY: </p>
               <input
+                type="number"
                 disabled={enable}
                 value={data.GetResponseSubscriber?.skey}
                 onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
