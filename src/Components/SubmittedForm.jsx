@@ -1,5 +1,6 @@
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import React, { useState, useEffect, useCallback } from "react";
+import { produce } from "immer";
 import Navbar from "./Navbar";
 import { Switch } from "antd";
 import axios from "axios";
@@ -186,15 +187,26 @@ const SubmittedForm = () => {
     //   console.log(res);
     //   setData_1(res.data);
     // });
-    let res = await axios.get(`http://localhost:5000/data/${input}`)
-    console.log(res.data);
-    setData_1([res.data]);
+    if(input.length!==0){
+      let res = await axios.get(`http://localhost:5000/data/${input}`)
+      console.log(res.data);
+      setData_1([res.data]);
+    }
+    else if(input_1.length!==0){
+      let res = await axios.get(`http://localhost:5000/get-data-by-msisdn/${input_1}`)
+      console.log(res.data);
+      setData_1([res.data]);
+
+    }
+    
+    
     console.log(data);
     setInput("");
     setInput_1("");
     setEditEnable(true);
     setSearch(true);
     setImsi(input);
+    setthrowError(false)
   };
   useEffect(()=>{
     setsearchResults(data);
@@ -235,9 +247,11 @@ const SubmittedForm = () => {
     setData_1(updatedData);
   };
   const handleSwitch = (id) => {
-    const updatedData = [...data];
-    updatedData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov = !updatedData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov;
-    setData_1(updatedData);
+    setData_1((prevData) => {
+      return produce(prevData, (newData) => {
+        newData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov = !newData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov;
+      });
+    });
   };
   const handleSwitch_2 = () => {
     const updatedData = [...data];
@@ -254,19 +268,29 @@ const SubmittedForm = () => {
   };
   const handleDelete = (id) => {
     setData_1((prevData) => {
-      const newData = [...prevData];
-      newData[0].GetResponseSubscriber.services.optgprss.optgprs.splice(id, 1);
-      return newData;
+      return produce(prevData, (newData) => {
+        newData[0].GetResponseSubscriber.services.optgprss.optgprs.splice(id, 1);
+      });
     });
   };
+  const [throwError, setthrowError] =useState(false)
   const handleUpdateData = async () => {
-    try {
-      const imsiNumber = data[0].GetResponseSubscriber.imsi;
-      await axios.put(`http://${process.env.ENDPOINT}:${process.env.PORT}/${imsiNumber}`, data[0]);
-      console.log("Data updated successfully!");
-    } catch (error) {
-      console.error("Error updating data:", error);
+    if((!Number.isInteger(parseInt(data[0].GetResponseSubscriber.hlrsn)))
+    ||(!Number.isInteger(parseInt(data[0].GetResponseSubscriber.skey)))
+    &&(data[0].GetResponseSubscriber.hlrsn.trim().length===0)
+    ||(data[0].GetResponseSubscriber.skey.trim().length===0)){
+      setthrowError(true)
     }
+    else{
+      try {
+        const imsiNumber = data[0].GetResponseSubscriber.imsi;
+        await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, data[0]);
+        console.log("Data updated successfully!");
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+   
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -275,32 +299,30 @@ const SubmittedForm = () => {
   };
   const handleAdd = useCallback(() => {
     setData_1((prevData) => {
-      const newData = { ...prevData[0] };
-      const optgprs = [...newData.GetResponseSubscriber.services.optgprss.optgprs];
-  
-      if (optgprs.length < 5) {
+      return produce(prevData, (newData) => {
+        const optgprs = [...newData[0].GetResponseSubscriber.services.optgprss.optgprs];
         optgprs.push({
           prov: false,
           cntxId: null,
         });
-      }
-      newData.GetResponseSubscriber.services.optgprss.optgprs = optgprs;
-      return [newData];
+        newData[0].GetResponseSubscriber.services.optgprss.optgprs = optgprs;
+      });
     });
   }, []);
-  
 
   return (
     <div className="searchData">
       <Navbar />
       <div className="searchfield">
         <input
+          disabled={!enable}
           placeholder="Search IMSI"
           className="search"
           value={input}
           onChange={(e) => handleSearchChange(e.target.value)}
         />
         <input
+          disabled={!enable}
           placeholder="Search MSISDN"
           className="search msisdn-search"
           value={input_1}
@@ -331,12 +353,12 @@ const SubmittedForm = () => {
 
                 ></input>
                 <p>hlrsn: </p>
-                <input
-                  type ="number"
+                {throwError===true?<p style={{color: "red", fontSize:"10px"}}>Enter Valid number</p>: <input
                   value={data.GetResponseSubscriber?.hlrsn}
                   disabled={enable}
-                  onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
-                ></input>
+                  onChange={e => handleChange('hlrsn', null, null, e.target.value)}
+                ></input>}
+               
                 <p>CardTyp: </p>
                 <select  value={data.GetResponseSubscriber?.cardType} disabled={enable}  onChange={e => { handleChange('cardType', null, null, e.target.value) }}>
                   <option>
@@ -508,12 +530,12 @@ const SubmittedForm = () => {
                 <option value="option3">OPT3</option>
               </select>
               <p>SKEY: </p>
+              {throwError===true?<p style={{color: "red", fontSize:"10px"}}>Enter Valid number</p>:
               <input
-                type="number"
                 disabled={enable}
                 value={data.GetResponseSubscriber?.skey}
-                onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
-              ></input>
+                onChange={e => handleChange('skey', null, null, e.target.value)}
+              ></input>}
             </div>
           ))
         )}
