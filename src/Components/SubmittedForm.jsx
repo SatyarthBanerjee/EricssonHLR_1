@@ -309,6 +309,10 @@ const SubmittedForm = () => {
       });
     });
   }, []);
+  const handleDeleteForm = async()=>{
+    const imsiNumber = data[0].GetResponseSubscriber.imsi;
+    await axios.delete(`http://localhost:5000/delete/${imsiNumber}`, data[0]);
+  }
 
   return (
     <div className="searchData">
@@ -495,11 +499,12 @@ const SubmittedForm = () => {
                 </div>
                 <div className="rightoptgrs">
                   {data.GetResponseSubscriber?.services?.optgprss?.optgprs
-                    .length !== 5 ? (
+                    .length !== 5?(
                     <button disabled={enable} onClick={handleAdd} className="subaddbutton">+</button>
                   ) : (
                     <button className="subaddbuttondisabled">+</button>
                   )}
+                  
                   {data.GetResponseSubscriber?.services?.optgprss?.optgprs?.map(
                     (item, id) => {
                       return (
@@ -508,7 +513,8 @@ const SubmittedForm = () => {
                           <Switch checked={JSON.parse(item.prov)} disabled={enable} onChange={() => handleSwitch(id)} />
                           <p>CNTXID</p>
                           <input disabled={enable} value={item.cntxId} onChange={e => handleChange_1(e, id, 'cntxId')}></input>
-                          {!enable?<img
+                          {!enable&&data.GetResponseSubscriber?.services?.optgprss?.optgprs
+                    .length !== 1?<img
                             className="deletebutton"
                             src="/Images/delete.png"
                             alt="Delete"
@@ -548,7 +554,7 @@ const SubmittedForm = () => {
             <button onClick={enableCancel} disabled={enable}>
               Cancel
             </button>
-            {enable === false ? <button>Delete</button> : null}
+            {enable === false ? <button onClick={handleDeleteForm}>Delete</button> : null}
           </>
         ) : null}
       </div>

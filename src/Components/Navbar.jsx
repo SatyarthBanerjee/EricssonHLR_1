@@ -1,10 +1,14 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
+  const navigate=useNavigate()
+  const handleHome=()=>{
+    navigate("/")
+  }
   return (
     <div className='nav'>
         <div className='leftnav'>
-            <h1 className='logo'>logo</h1>
+            <h1 className='logo' onClick={handleHome}>logo</h1>
         </div>
         <div className='rightnav'>
             <ul>
