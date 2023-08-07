@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const url = "http://localhost:5000";
-const url2 = `http://${process.env.ENDPOINT}:${process.env.SERVER_PORT}`;
+const url2 = `http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}`;
 
 export const postData = async (data) => {
   try {
