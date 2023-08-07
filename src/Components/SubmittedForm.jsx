@@ -261,11 +261,17 @@ const SubmittedForm = () => {
   const handleChange_1 = (e, index, field) => {
     const { value } = e.target;
     setData_1(prevData => {
-      const newData = [...prevData];
-      newData[0].GetResponseSubscriber.services.optgprss.optgprs[index][field] = value;
-      return newData;
+      return produce(prevData, draftData => {
+        draftData[0].GetResponseSubscriber.services.optgprss.optgprs[index][field] = value;
+      });
     });
   };
+      // setData_1((prevData) => {
+      //   return produce(prevData, (newData) => {
+      //     newData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov = !newData[0].GetResponseSubscriber.services.optgprss.optgprs[id].prov;
+      //   });
+      // });
+  
   const handleDelete = (id) => {
     setData_1((prevData) => {
       return produce(prevData, (newData) => {
