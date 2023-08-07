@@ -290,7 +290,7 @@ const SubmittedForm = () => {
     else{
       try {
         const imsiNumber = data[0].GetResponseSubscriber.imsi;
-        await axios.put(`http://localhost:5000/update-data/${imsiNumber}`, data[0]);
+        await axios.put(`http://${process.env.ENDPOINT}:${process.env.SERVER_PORT}/update-data/${imsiNumber}`, data[0]);
         console.log("Data updated successfully!");
       } catch (error) {
         console.error("Error updating data:", error);
@@ -317,7 +317,7 @@ const SubmittedForm = () => {
   }, []);
   const handleDeleteForm = async()=>{
     const imsiNumber = data[0].GetResponseSubscriber.imsi;
-    await axios.delete(`http://localhost:5000/delete/${imsiNumber}`, data[0]);
+    await axios.put(`http://${process.env.ENDPOINT}:${process.env.SERVER_PORT}/delete/${imsiNumber}`, data[0]);
   }
 
   return (
