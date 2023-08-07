@@ -188,14 +188,24 @@ const SubmittedForm = () => {
     //   setData_1(res.data);
     // });
     if(input.length!==0){
+      try{
       let res = await axios.get(`http://localhost:5000/data/${input}`)
       console.log(res.data);
       setData_1([res.data]);
+      }
+      catch(err){
+        alert('No data found');
+      }
     }
     else if(input_1.length!==0){
+      try{
       let res = await axios.get(`http://localhost:5000/get-data-by-msisdn/${input_1}`)
       console.log(res.data);
       setData_1([res.data]);
+      }
+      catch(err){
+        alert("No data found");
+      }
 
     }
     
@@ -278,6 +288,7 @@ const SubmittedForm = () => {
         newData[0].GetResponseSubscriber.services.optgprss.optgprs.splice(id, 1);
       });
     });
+   
   };
   const [throwError, setthrowError] =useState(false)
   const handleUpdateData = async () => {
@@ -291,9 +302,9 @@ const SubmittedForm = () => {
       try {
         const imsiNumber = data[0].GetResponseSubscriber.imsi;
         await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, data[0]);
-        console.log("Data updated successfully!");
+        alert("Data updated successfully!");
       } catch (error) {
-        console.error("Error updating data:", error);
+        alert("Error updating data:", error);
       }
     }
    
@@ -316,10 +327,12 @@ const SubmittedForm = () => {
     });
   }, []);
   const handleDeleteForm = async()=>{
-    const imsiNumber = data[0].GetResponseSubscriber.imsi;
-    console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`);
-    await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
+      const imsiNumber = data[0].GetResponseSubscriber.imsi;
+      console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`);
+      await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
+   
   }
+ 
 
   return (
     <div className="searchData">
@@ -346,7 +359,7 @@ const SubmittedForm = () => {
         ></img>
       </div>
       <div className="resultField">
-        {searchResults.length === 0 ? (
+        {searchResults.length === 0?  (
           <p>Type IMSI or MSISDN</p>
         ) : (
           searchResults.map((data, index) => (

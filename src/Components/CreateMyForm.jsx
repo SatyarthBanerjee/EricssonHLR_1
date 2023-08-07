@@ -483,7 +483,7 @@ const CreateMyForm = () => {
 
         </div>
        
-        {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>}
+        {/* {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>} */}
       </div>
       
       <button className="submitbtn" onClick={handleSubmit}>Submit</button>
