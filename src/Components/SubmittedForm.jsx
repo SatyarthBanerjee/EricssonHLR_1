@@ -328,9 +328,8 @@ const SubmittedForm = () => {
   }, []);
   const handleDeleteForm = async()=>{
       const imsiNumber = data[0].GetResponseSubscriber.imsi;
-      console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`);
+      console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`);
       await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
-   
   }
  
 
