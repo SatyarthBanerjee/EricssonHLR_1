@@ -337,12 +337,22 @@ const SubmittedForm = () => {
         setisLoading(true)
         setData_1([])
         setEnable(!enable)
-        await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, data[0]);
+        const res_1 = await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, data[0]);
         // const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, axios.defaults.headers.common, ""];
         // const res_1 = await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
         // const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
         // const dataReturn = [response, request]
         // await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+
+        try {
+          const request = ["PUT", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, axios.defaults.headers.common, ""];
+          const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
+          const dataReturn = [response, request]
+          await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`, dataReturn);
+          console.log("Log Saved!");
+        } catch (error) {
+          console.log("Error saving log! --> ", error.message);
+        }
 
         alert("Data updated successfully!");
       } catch (error) {
@@ -374,16 +384,19 @@ const SubmittedForm = () => {
   const handleDeleteForm = async()=>{
     const imsiNumber = data[0].GetResponseSubscriber.imsi;
     try{
-      const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, axios.defaults.headers.common, ""];
-
-      console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`);
       setEnable(!enable)
       setData_1([]);
-      setisLoading(true)
+      setisLoading(true);
       const res_1 = await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
-      const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
-      const dataReturn = [response, request]
-      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+      try {
+        const request = ["PUT", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, axios.defaults.headers.common, ""];
+        const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
+        const dataReturn = [response, request]
+        await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`, dataReturn);
+        console.log("Log Saved!");
+      } catch (error) {
+        console.log("Error saving log! --> ", error.message);
+      }
 
     }
     catch(err){
