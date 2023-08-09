@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { DropDown1, DropDown2, DropDown3, DropDown4, DropDown5, DropDown6, DropDown7, DropDown8 } from './DropDowns/DropDown'
-import { Switch } from 'antd'
+import { Switch, Spin } from 'antd'
 import { postData } from './PostData'
+import popup1 from './Popups/popup1'
 
 const CreateMyForm = () => {
   const [data, setData] = useState({
@@ -71,6 +72,7 @@ const CreateMyForm = () => {
   const [error, setError] = useState(false)
   const [isSubmitted, setisSubmitted] = useState(false)
   const [personalError, setPersonalerror] = useState(false)
+  const [isLoading, setisLoading]= useState(false)
 
   const handleSwitch = (index) => {
     setData(prevData => {
@@ -251,13 +253,18 @@ const CreateMyForm = () => {
           setPersonalerror(true);
         } else {
           // All validations pass, submit the data
+          setisLoading(true)
           postData(convertedFormData)
             .then(() => {
               console.log(convertedFormData);
               setisSubmitted(true);
+              
             })
             .catch((error) => {
               console.error("Error submitting data:", error);
+            }).finally(()=>{
+              setisLoading(false);
+              // setTimeout(()=>setisLoading(false),500);//wait a few seconds to hide
             });
         }
       }
@@ -310,182 +317,183 @@ const CreateMyForm = () => {
     <>
     <h1 className='test'>Hello</h1>
       <div className='createMyForm'>
-        <div className='firstrowform'>
-          <p>IMSI</p>
-          {personalError === false ?
-            <input
-              className='input imsi'
-              name="imsi"
-              value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
-              placeholder='IMSI'
-              onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
-            />
-            : <label>*Numeric and length 14</label>
-          }
-
-          <p>MSISDN</p>
-          {personalError === false ?
-            <input
-              className='input msisdn'
-              name="msisdn"
-              value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
-              placeholder='MSISDN'
-              onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
-            />
-            : <label>*Numeric and length 10</label>
-          }
-
-          <p>HLRSN</p>
-          {personalError === false ?
-            <input
-              className='input hlrsn'
-              name="hlrsn"
-              value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
-              placeholder='HLRSN'
-              onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
-            />
-            : <label>*Numeric and length 1</label>
-          }
-
-          <p>Cardtype</p>
-          <DropDown1
-            value1={data.GetResponseSubscriber.cardType}
-            onChange1={e => { handleChange('cardType', null, null, e.target.value) }}
-          />
-
-          <p>Nam</p>
-          <DropDown2
-            value2={data.GetResponseSubscriber.nam}
-            onChange2={e => { handleChange('nam', null, null, e.target.value) }}
-          />
-        </div>
-
-        <h1  className='serviceh1'>Services</h1>
-        <div className='services'>
-          <div className='leftservices'>
+          <div className='firstrowform'>
+            <p>IMSI</p>
+            {personalError === false ?
               <input
-                value={data.GetResponseSubscriber.services.smsmt}
-                placeholder='SMSMT'
-                onChange={e => { handleChange('services', 'smsmt', null, e.target.value) }}
+                className='input imsi'
+                name="imsi"
+                value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
+                placeholder='IMSI'
+                onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
               />
-              <div className='leftcontent'>
-                <p>CLIP</p>
-                <DropDown3
-                  value3={data.GetResponseSubscriber.services.clip.prov}
-                  onChange3={e => { handleChange('services', 'clip', 'prov', e.target.value) }}
-                />
-              </div>
-              <div className='leftcontent'>
-                <p>ODBOC</p>
-                <DropDown4
-                  value4={data.GetResponseSubscriber.services.odboc.odboc}
-                  onChange4={e => handleChange("services", "odboc", "odboc", e.target.value)}
-                />
-
-              </div>
-              <div className='leftcontent'>
-                <p>ODBROAM</p>
-                <DropDown5
-                  value5={data.GetResponseSubscriber.services.odbroam.odbroam}
-                  onChange5={e => handleChange("services", "odbroam", "odbroam", e.target.value)}
-                />
-              </div>
-              <div className='leftcontent'>
-                <p>Category</p>
-                <DropDown6
-                  value6={data.GetResponseSubscriber.services.category.category}
-                  onChange6={e => handleChange("services", "category", "category", e.target.value)}
-                />
-
-              </div>
-              <div className='leftcontent'>
-                <p>EPS</p>
-                <div className="switch-container">
-                  <Switch
-                    checked={data.GetResponseSubscriber.services.eps.prov}
-                    onChange={handleSwitch_2}
-                    style={{
-                      backgroundColor: data.GetResponseSubscriber.services.eps.prov ? 'green' : 'lightgrey',
-                    }}
-                  />
-                </div>
-              </div>
-    
-              <div className='leftcontent'>
-                <p>SMDP</p>
-                <DropDown8
-                  value8={data.GetResponseSubscriber.services.smdp}
-                  onChange8={e => handleChange("services", "smdp", null, e.target.value)}
-                />
-              </div>
-           
-         </div>
-         
-
-        
-          <div className='optgprs'>
-            {data.GetResponseSubscriber.services.optgprss.optgprs.length !== 5 ?
-              <button className="addbutton" onClick={handleAdd}>+</button>
-              : <button className='addbuttondisabled'>+</button>
+              : <label>*Numeric and length 14</label>
             }
 
-            {data.GetResponseSubscriber.services.optgprss.optgprs.map((item, index) => (
-              <div className="arrinpfield" key={index}>
-                <p>PROV</p>
-                <Switch
-                  // className='epsswitch'
-                  checked={item.prov}
-                  onChange={() => handleSwitch(index)}
-                  style={{backgroundColor:item.prov?"green":"lightgrey", marginTop:"5px", marginRight:"10px"}}
-                />
+            <p>MSISDN</p>
+            {personalError === false ?
+              <input
+                className='input msisdn'
+                name="msisdn"
+                value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
+                placeholder='MSISDN'
+                onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
+              />
+              : <label>*Numeric and length 10</label>
+            }
 
-                <p>CNTXLD</p>
-                {personalError === false ?
-                  <input
-                    className='arrinp'
-                    type="text"
-                    value={item.cntxId === null ? "" : item.cntxId}
-                    onChange={e => handleChange_1(e, index, 'cntxId')}
-                  />
-                  : <label>*Numeric and 1 digit only</label>
-                }
+            <p>HLRSN</p>
+            {personalError === false ?
+              <input
+                className='input hlrsn'
+                name="hlrsn"
+                value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
+                placeholder='HLRSN'
+                onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
+              />
+              : <label>*Numeric and length 1</label>
+            }
 
-                <img
-                  className="deletebutton"
-                  src='/Images/delete.png'
-                  alt="Delete"
-                  onClick={() => handleDelete(index)}
-                />
-              </div>
-            ))}
+            <p>Cardtype</p>
+            <DropDown1
+              value1={data.GetResponseSubscriber.cardType}
+              onChange1={e => { handleChange('cardType', null, null, e.target.value) }}
+            />
+
+            <p>Nam</p>
+            <DropDown2
+              value2={data.GetResponseSubscriber.nam}
+              onChange2={e => { handleChange('nam', null, null, e.target.value) }}
+            />
           </div>
-        </div>
-        
-        <div className='lastPart'>
-          <>
-            <p>RROPTION</p>
-            <DropDown7
-              value7={data.GetResponseSubscriber.rroption}
-              onChange7={e => handleChange("rroption", null, null, e.target.value)}
-            />
-          </>
 
-          {personalError === false ?
-            <input
-              className='input skey'
-              name="skey"
-              value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
-              placeholder='SKEY'
-              onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
-            />
-            : <label>*Numeric and max length 9</label>
-          }
+          <h1  className='serviceh1'>Services</h1>
+          <div className='services'>
+            <div className='leftservices'>
+                <input
+                  value={data.GetResponseSubscriber.services.smsmt}
+                  placeholder='SMSMT'
+                  onChange={e => { handleChange('services', 'smsmt', null, e.target.value) }}
+                />
+                <div className='leftcontent'>
+                  <p>CLIP</p>
+                  <DropDown3
+                    value3={data.GetResponseSubscriber.services.clip.prov}
+                    onChange3={e => { handleChange('services', 'clip', 'prov', e.target.value) }}
+                  />
+                </div>
+                <div className='leftcontent'>
+                  <p>ODBOC</p>
+                  <DropDown4
+                    value4={data.GetResponseSubscriber.services.odboc.odboc}
+                    onChange4={e => handleChange("services", "odboc", "odboc", e.target.value)}
+                  />
 
-        </div>
-       
-        {/* {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>} */}
-      </div>
+                </div>
+                <div className='leftcontent'>
+                  <p>ODBROAM</p>
+                  <DropDown5
+                    value5={data.GetResponseSubscriber.services.odbroam.odbroam}
+                    onChange5={e => handleChange("services", "odbroam", "odbroam", e.target.value)}
+                  />
+                </div>
+                <div className='leftcontent'>
+                  <p>Category</p>
+                  <DropDown6
+                    value6={data.GetResponseSubscriber.services.category.category}
+                    onChange6={e => handleChange("services", "category", "category", e.target.value)}
+                  />
+
+                </div>
+                <div className='leftcontent'>
+                  <p>EPS</p>
+                  <div className="switch-container">
+                    <Switch
+                      checked={data.GetResponseSubscriber.services.eps.prov}
+                      onChange={handleSwitch_2}
+                      style={{
+                        backgroundColor: data.GetResponseSubscriber.services.eps.prov ? 'green' : 'lightgrey',
+                      }}
+                    />
+                  </div>
+                </div>
       
+                <div className='leftcontent'>
+                  <p>SMDP</p>
+                  <DropDown8
+                    value8={data.GetResponseSubscriber.services.smdp}
+                    onChange8={e => handleChange("services", "smdp", null, e.target.value)}
+                  />
+                </div>
+            
+          </div>
+          
+
+          
+            <div className='optgprs'>
+              {data.GetResponseSubscriber.services.optgprss.optgprs.length !== 5 ?
+                <button className="addbutton" onClick={handleAdd}>+</button>
+                : <button className='addbuttondisabled'>+</button>
+              }
+
+              {data.GetResponseSubscriber.services.optgprss.optgprs.map((item, index) => (
+                <div className="arrinpfield" key={index}>
+                  <p>PROV</p>
+                  <Switch
+                    // className='epsswitch'
+                    checked={item.prov}
+                    onChange={() => handleSwitch(index)}
+                    style={{backgroundColor:item.prov?"green":"lightgrey", marginTop:"5px", marginRight:"10px"}}
+                  />
+
+                  <p>CNTXLD</p>
+                  {personalError === false ?
+                    <input
+                      className='arrinp'
+                      type="text"
+                      value={item.cntxId === null ? "" : item.cntxId}
+                      onChange={e => handleChange_1(e, index, 'cntxId')}
+                    />
+                    : <label>*Numeric and 1 digit only</label>
+                  }
+
+                  <img
+                    className="deletebutton"
+                    src='/Images/delete.png'
+                    alt="Delete"
+                    onClick={() => handleDelete(index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <div className='lastPart'>
+            <>
+              <p>RROPTION</p>
+              <DropDown7
+                value7={data.GetResponseSubscriber.rroption}
+                onChange7={e => handleChange("rroption", null, null, e.target.value)}
+              />
+            </>
+
+            {personalError === false ?
+              <input
+                className='input skey'
+                name="skey"
+                value={data.GetResponseSubscriber.skey === null ? "" : data.GetResponseSubscriber.skey}
+                placeholder='SKEY'
+                onChange={e => handleChange('skey', null, null, parseInt(e.target.value))}
+              />
+              : <label>*Numeric and max length 9</label>
+            }
+
+          </div>
+          {/* {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>} */}
+        </div>
+      
+      
+        {isLoading?<Spin style={{position:"absolute", top:"50%", left:"50%", height: "40px", width: "40px"}}/>:null}
       <button className="submitbtn" onClick={handleSubmit}>Submit</button>
       {/* <button className='updatebtn' onClick={handleUpdate}>Update</button> */}
     </>

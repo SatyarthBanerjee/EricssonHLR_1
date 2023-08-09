@@ -2,7 +2,7 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import React, { useState, useEffect, useCallback } from "react";
 import { produce } from "immer";
 import Navbar from "./Navbar";
-import { Switch } from "antd";
+import { Spin, Switch } from "antd";
 import axios from "axios";
 
 const SubmittedForm = () => {
@@ -166,6 +166,7 @@ const SubmittedForm = () => {
   const [data, setData_1] = useState([]);
   const [imsi, setImsi] = useState("");
   const [search, setSearch] = useState(false);
+  const [isLoading, setisLoading]= useState(false);
   // useEffect(()=>{
   //   // axios.get(`https://localhost:5000/all-data/${imsi}`).then(
   //   //   res=>setData_1(res.data)
@@ -189,22 +190,40 @@ const SubmittedForm = () => {
     // });
     if(input.length!==0){
       try{
+      const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/data/${input}`, axios.defaults.headers.common, ""];
+      setisLoading(true)
       let res = await axios.get(`http://localhost:5000/data/${input}`)
       console.log(res.data);
       setData_1([res.data]);
+      const response = [res.status + ":" + res.statusText, res.headers, res.data];
+      const dataReturn = [response, request]
+      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+
       }
       catch(err){
         alert('No data found');
       }
+      finally{
+        setisLoading(false)
+      }
     }
     else if(input_1.length!==0){
       try{
+      const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/data/${input_1}`, axios.defaults.headers.common, ""];
+      setisLoading(true)
       let res = await axios.get(`http://localhost:5000/get-data-by-msisdn/${input_1}`)
       console.log(res.data);
       setData_1([res.data]);
+      const response = [res.status + ":" + res.statusText, res.headers, res.data];
+      const dataReturn = [response, request]
+      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+
       }
       catch(err){
         alert("No data found");
+      }
+      finally{
+        setisLoading(false);
       }
 
     }
@@ -244,18 +263,21 @@ const SubmittedForm = () => {
     setEnable(true);
   };
   const handleChange = (field, nestedField, nestedField_2, value) => {
-    const updatedData = [...data];
-    if (nestedField) {
-      if (nestedField_2) {
-        updatedData[0].GetResponseSubscriber[field][nestedField][nestedField_2] = value;
-      } else {
-        updatedData[0].GetResponseSubscriber[field][nestedField] = value;
-      }
-    } else {
-      updatedData[0].GetResponseSubscriber[field] = value;
-    }
-    setData_1(updatedData);
+    setData_1(prevData => {
+      return produce(prevData, draftData => {
+        if (nestedField) {
+          if (nestedField_2) {
+            draftData[0].GetResponseSubscriber[field][nestedField][nestedField_2] = value;
+          } else {
+            draftData[0].GetResponseSubscriber[field][nestedField] = value;
+          }
+        } else {
+          draftData[0].GetResponseSubscriber[field] = value;
+        }
+      });
+    });
   };
+  
   const handleSwitch = (id) => {
     setData_1((prevData) => {
       return produce(prevData, (newData) => {
@@ -264,9 +286,11 @@ const SubmittedForm = () => {
     });
   };
   const handleSwitch_2 = () => {
-    const updatedData = [...data];
-    updatedData[0].GetResponseSubscriber.services.eps.prov = !updatedData[0].GetResponseSubscriber.services.eps.prov;
-    setData_1(updatedData);
+    setData_1(prevData => {
+      return produce(prevData, draftData => {
+        draftData[0].GetResponseSubscriber.services.eps.prov = !draftData[0].GetResponseSubscriber.services.eps.prov;
+      });
+    });
   };
   const handleChange_1 = (e, index, field) => {
     const { value } = e.target;
@@ -301,10 +325,23 @@ const SubmittedForm = () => {
     else{
       try {
         const imsiNumber = data[0].GetResponseSubscriber.imsi;
+        setisLoading(true)
+        setData_1([])
+        setEnable(!enable)
         await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, data[0]);
+        // const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/update-data/${imsiNumber}`, axios.defaults.headers.common, ""];
+        // const res_1 = await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
+        // const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
+        // const dataReturn = [response, request]
+        // await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+
+
         alert("Data updated successfully!");
       } catch (error) {
         alert("Error updating data:", error);
+      }
+      finally{
+        setisLoading(false)
       }
     }
    
@@ -327,9 +364,27 @@ const SubmittedForm = () => {
     });
   }, []);
   const handleDeleteForm = async()=>{
+    try{
       const imsiNumber = data[0].GetResponseSubscriber.imsi;
+      const request = ["GET", `${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, axios.defaults.headers.common, ""];
+
       console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`);
-      await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
+      setEnable(!enable)
+      setData_1([]);
+      setisLoading(true)
+      const res_1 = await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
+      const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
+      const dataReturn = [response, request]
+      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+
+    }
+    catch(err){
+      alert("Error deleting data",err)
+    }
+    finally{
+      setTimeout(()=>setisLoading(false),500);
+    }
+      
    
   }
  
@@ -565,6 +620,7 @@ const SubmittedForm = () => {
             </div>
           ))
         )}
+        {isLoading?<Spin style={{position:"absolute", top:"50%", left:"50%"}}/>:null}
       </div>
       <div className="allbtns">
         {editEnable === true ? (

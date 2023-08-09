@@ -552,6 +552,7 @@ select{
   border: 5px solid black;
   padding: 15px;
 }
+
 /* Example Media Query */
 @media (max-width: 576px) {
   .rightnav{
