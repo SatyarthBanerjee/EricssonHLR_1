@@ -13,18 +13,26 @@ export const postData = async (data) => {
     ];
     let res = await axios.post(`${url}/new-data`, data);
     console.log("Data saved: ", res.data);
-    setTimeout(()=>{
+    setTimeout(() => {
       alert("Data Saved");
-    },500)
-    
-    const response = [res.status + ":" + res.statusText, res.headers, res.data];
-    const dataReturn = [request, response];
-    await axios.post(`${url2}/addRestLog`, dataReturn);
+    }, 500);
+
+    try {
+      const response = [
+        res.status + ":" + res.statusText,
+        res.headers,
+        res.data,
+      ];
+      const dataReturn = [request, response];
+      await axios.post(`${url2}/addRestLog`, dataReturn);
+      console.log("Log saved!");
+    } catch (error) {
+      console.log("Error saving log! --> ", error.message);
+    }
   } catch (error) {
     console.log("Error calling postData--> ", error.message);
-    setTimeout(()=>{
+    setTimeout(() => {
       alert("Data couldn't be saved!", 1000);
-    })
-    
+    });
   }
 };

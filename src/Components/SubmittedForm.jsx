@@ -195,9 +195,14 @@ const SubmittedForm = () => {
       let res = await axios.get(`http://localhost:5000/data/${input}`)
       console.log(res.data);
       setData_1([res.data]);
-      const response = [res.status + ":" + res.statusText, res.headers, res.data];
-      const dataReturn = [response, request]
-      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
+      try {
+        const response = [res.status + ":" + res.statusText, res.headers, res.data];
+        const dataReturn = [response, request]
+        console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`); 
+        await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`, dataReturn)
+      } catch (error) {
+        console.log("Error saving log! --> ", error.message);
+      }
 
       }
       catch(err){
@@ -214,10 +219,14 @@ const SubmittedForm = () => {
       let res = await axios.get(`http://localhost:5000/get-data-by-msisdn/${input_1}`)
       console.log(res.data);
       setData_1([res.data]);
-      const response = [res.status + ":" + res.statusText, res.headers, res.data];
-      const dataReturn = [response, request]
-      await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
-
+      try {
+        const response = [res.status + ":" + res.statusText, res.headers, res.data];
+        const dataReturn = [response, request]
+        console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`); 
+        await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`, dataReturn)
+      } catch (error) {
+        console.log("Error saving log! --> ", error.message);
+      }
       }
       catch(err){
         alert("No data found");
@@ -334,7 +343,6 @@ const SubmittedForm = () => {
         // const response = [res_1.status + ":" + res_1.statusText, res_1.headers, res_1.data];
         // const dataReturn = [response, request]
         // await axios.post(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/addRestLog`, dataReturn)
-
 
         alert("Data updated successfully!");
       } catch (error) {
