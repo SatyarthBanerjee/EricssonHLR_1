@@ -10,7 +10,7 @@ function App() {
         <Router>
           <Routes> 
             <Route exact path="/" element ={<LoginDialog />}></Route>
-            <Route  exact path="/" element={<AppChild />} />
+            <Route  path="/Home" element={<AppChild />} />
             <Route path="/submittedform" element={<SubmittedForm />} />
           </Routes>
         </Router>

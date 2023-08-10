@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
   const navigate=useNavigate()
   const handleHome=()=>{
+    navigate("/Home")
+  }
+  const handleLogout = ()=>{
     navigate("/")
   }
   return (
@@ -15,7 +18,7 @@ const Navbar = () => {
                 <li><a href='#'>Home</a></li>
                 <li><a href='#'>About</a></li>
                 <li><a href='#'>Contact Us</a></li>
-                <li><a href='#'>Login/Register</a></li>
+                <li><a onClick={handleLogout}>LogOut</a></li>
             </ul>
         </div>
       

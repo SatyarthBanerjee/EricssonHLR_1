@@ -6,7 +6,7 @@ const url2 = `http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_L
 export const postData = async (data) => {
   try {
     const request = [
-      "GET",
+      "POST",
       `${url}/new-data`,
       axios.defaults.headers.common,
       "",

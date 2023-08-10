@@ -324,7 +324,7 @@ const CreateMyForm = () => {
                 className='input imsi'
                 name="imsi"
                 value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
-                placeholder='IMSI'
+                
                 onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
               />
               : <label>*Numeric and length 14</label>
@@ -336,7 +336,7 @@ const CreateMyForm = () => {
                 className='input msisdn'
                 name="msisdn"
                 value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
-                placeholder='MSISDN'
+                
                 onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
               />
               : <label>*Numeric and length 10</label>
@@ -348,7 +348,7 @@ const CreateMyForm = () => {
                 className='input hlrsn'
                 name="hlrsn"
                 value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
-                placeholder='HLRSN'
+                
                 onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
               />
               : <label>*Numeric and length 1</label>

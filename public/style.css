@@ -29,6 +29,7 @@
 .rightnav ul a{
   text-decoration: none;
   color: white;
+  cursor: pointer;
 }
 .createform{
   height: 200px;
@@ -261,21 +262,22 @@ label{
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  width: 95%;
+  width: 80%;
+  margin-right: 15px;
   text-align: left;
   padding: 10px;
   gap: 10px;
   color: black;
   border-radius: 12px;
-  padding: 10px 0 10px 0 
+  padding: 15px 10px 15px 10px;
 }
 .leftcontent{
   display: flex;
   /* background-color: blue; */
-  width: 80%;
+  width: 90%;
 }
 .leftservices input{
-  width: 80%;
+  width: 90%;
   background-color: #d3d3d3;
   border-style: none;
   height: 30px;
@@ -553,6 +555,28 @@ select{
   padding: 15px;
 }
 
+.login{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+.logindiv{
+  height: 500px;
+  width: 400px;
+  background-color: #202121 ;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 0 7px #000;
+  gap: 10px
+}
 /* Example Media Query */
 @media (max-width: 576px) {
   .rightnav{
@@ -612,20 +636,74 @@ select{
 }
 .firstrowform{
   width: 90%;
+  height: 300px;
   justify-content: space-between;
   padding: 10px;
   border-radius: 12px;
+  gap:3px;
+  overflow-y:visible;
 }
+/* .firstrowform:-webkit-scrollbar{
+  display: none ;
+} */
 .firstrowform input{
-  height: 5px;
-  width: 50px;
+  height: 3px;
+  width: 3rem;
+  font-size: 10px;
+  margin-left: -10px;
 }
 .firstrowform select{
-  width: 50px;
+  width: 3rem;
+  font-size: 0.5rem;
 }
 .firstrowform p{
   text-align: left!important;
   font-size: 10px;
+  margin-right: 10px;
 }
+.services{
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 12px;
+}
+.leftservices{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  width: 50%;
+  text-align: left;
+  padding: 10px;
+  gap: 10px;
+  color: black;
+  border-radius: 12px;
+  padding: 10px 0 10px 0 
+}
+.leftservices select{
+  width: 3.5rem;
+  margin-top: -6px;
+}
+.optgprs{
+  width: 250px;
+  gap: 3px
+}
+.arrinpfield{
+  width:75%;
+  background-color: transparent;
+}
+.arrinpfield p{
+  font-size: 12px;
+  margin-right: 3px;
+}
+.arrinpfield input{
+  width: 3rem;
+}
+.lastPart{
+  width: 90%;
+}
+
 }
 
