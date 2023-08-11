@@ -205,7 +205,7 @@ label{
   margin-left: 15px;
   color: #000
 }
-.firstrowform select{
+.firstcont select{
   outline:none!important;
   /* -webkit-appearance:none; */
   margin-top: 10px;
@@ -577,6 +577,9 @@ select{
   box-shadow: 0 0 7px #000;
   gap: 10px
 }
+.firstcont{
+  display: flex;
+}
 /* Example Media Query */
 @media (max-width: 576px) {
   .rightnav{
@@ -587,61 +590,52 @@ select{
   }
  
 }
-@media (max-width: 414px) {
+@media (max-width: 426px) {
   .createMyForm{
-    max-width: 300px
-}
-.firstrowform{
-  width: 90%;
-  justify-content: space-between;
-  padding: 10px;
-  border-radius: 12px;
-}
-.firstrowform input{
-  height: 5px;
-  width: 50px;
-}
-.firstrowform select{
-  width: 50px;
-}
-.firstrowform p{
-  text-align: left!important;
-  font-size: 10px;
+    max-width: 300px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .services{
   flex-direction: column;
-  max-width: 90%;
-  gap: 1.5em;
+  gap: 10px
 }
 .leftservices{
-  max-width: 300px;
-}
-.leftservices p{
-  padding-top: 4px;
+  width: 80%;
 }
 .optgprs{
-  padding: 10px;
-  max-width: 100%;
+  width: 200px;
+}
+.firstrowform{
+  display: flex;
+  flex-direction: column;
   border-radius: 12px;
-}
-.lastPart{
-  max-width: 90%;
-}
 
+}
+.firstcont input{
+  min-width: 70%;
+}
+.firstcont select{
+  width: 10px;
+}
 }
 /* Example Media Query */
 @media (max-width: 768px) {
   .createMyForm{
-    width: 600px
-}
+    width: 600px;
+  }
 .firstrowform{
   width: 90%;
   height: 300px;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
   border-radius: 12px;
   gap:3px;
   overflow-y:visible;
+  padding-right: 20px;
+}
+.firstcont{
+  gap: 5px;
 }
 /* .firstrowform:-webkit-scrollbar{
   display: none ;
@@ -652,9 +646,10 @@ select{
   font-size: 10px;
   margin-left: -10px;
 }
-.firstrowform select{
-  width: 3rem;
+.firstcont select{
+  width: 60px;
   font-size: 0.5rem;
+  margin-left: -10px;
 }
 .firstrowform p{
   text-align: left!important;
@@ -674,7 +669,7 @@ select{
   justify-content: center;
   align-items: center;
   background-color: #fff;
-  width: 50%;
+  width: 100%;
   text-align: left;
   padding: 10px;
   gap: 10px;
@@ -687,7 +682,7 @@ select{
   margin-top: -6px;
 }
 .optgprs{
-  width: 250px;
+  width: 243px;
   gap: 3px
 }
 .arrinpfield{

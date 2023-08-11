@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 const onSuccessCallback = (credentialResponse) => {
   console.log(credentialResponse);
 };
-
 const LoginDialog = () => {
   const navigate = useNavigate()
   const handleLoginSuccess = (res) => {
@@ -13,6 +12,7 @@ const LoginDialog = () => {
     console.log(res.credential);
     const decodedCredential = jwt_decode(res.credential);
     console.log(decodedCredential);
+  
     // Handle the successful login here, e.g., redirect to another page or store the user credentials.
   };
 
@@ -29,9 +29,8 @@ const LoginDialog = () => {
               onError={handleLoginError}
             />
       </div>
-       
     </div>
   )
 }
 
-export default LoginDialog
+export default LoginDialog;

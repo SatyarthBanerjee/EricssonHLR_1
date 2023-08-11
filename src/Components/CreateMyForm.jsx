@@ -318,53 +318,60 @@ const CreateMyForm = () => {
     <h1 className='test'>Hello</h1>
       <div className='createMyForm'>
           <div className='firstrowform'>
-            <p>IMSI</p>
-            {personalError === false ?
-              <input
-                className='input imsi'
-                name="imsi"
-                value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
-                
-                onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
+            <div className='firstcont'>
+              <p>IMSI</p>
+              {personalError === false ?
+                <input
+                  className='input imsi'
+                  name="imsi"
+                  value={data.GetResponseSubscriber.imsi === null ? "" : data.GetResponseSubscriber.imsi}
+                  
+                  onChange={e => handleChange('imsi', null, null, parseInt(e.target.value))}
+                />
+                : <label>*Numeric and length 14</label>
+              }
+
+            </div>
+            <div className='firstcont'>
+              <p>MSISDN</p>
+              {personalError === false ?
+                <input
+                  className='input msisdn'
+                  name="msisdn"
+                  value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
+                  
+                  onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
+                />
+                : <label>*Numeric and length 10</label>
+              }
+            </div>
+            <div className='firstcont'>
+              <p>HLRSN</p>
+              {personalError === false ?
+                <input
+                  className='input hlrsn'
+                  name="hlrsn"
+                  value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
+                  
+                  onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
+                />
+                : <label>*Numeric and length 1</label>
+              }
+            </div>
+            <div className='firstcont'>
+              <p>Cardtype</p>
+              <DropDown1
+                value1={data.GetResponseSubscriber.cardType}
+                onChange1={e => { handleChange('cardType', null, null, e.target.value) }}
               />
-              : <label>*Numeric and length 14</label>
-            }
-
-            <p>MSISDN</p>
-            {personalError === false ?
-              <input
-                className='input msisdn'
-                name="msisdn"
-                value={data.GetResponseSubscriber.msisdn === null ? "" : data.GetResponseSubscriber.msisdn}
-                
-                onChange={e => handleChange('msisdn', null, null, parseInt(e.target.value))}
+            </div>
+            <div className='firstcont'>
+              <p>Nam</p>
+              <DropDown2
+                value2={data.GetResponseSubscriber.nam}
+                onChange2={e => { handleChange('nam', null, null, e.target.value) }}
               />
-              : <label>*Numeric and length 10</label>
-            }
-
-            <p>HLRSN</p>
-            {personalError === false ?
-              <input
-                className='input hlrsn'
-                name="hlrsn"
-                value={data.GetResponseSubscriber.hlrsn === null ? "" : data.GetResponseSubscriber.hlrsn}
-                
-                onChange={e => handleChange('hlrsn', null, null, parseInt(e.target.value))}
-              />
-              : <label>*Numeric and length 1</label>
-            }
-
-            <p>Cardtype</p>
-            <DropDown1
-              value1={data.GetResponseSubscriber.cardType}
-              onChange1={e => { handleChange('cardType', null, null, e.target.value) }}
-            />
-
-            <p>Nam</p>
-            <DropDown2
-              value2={data.GetResponseSubscriber.nam}
-              onChange2={e => { handleChange('nam', null, null, e.target.value) }}
-            />
+            </div>
           </div>
 
           <h1  className='serviceh1'>Services</h1>
