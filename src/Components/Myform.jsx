@@ -10,7 +10,7 @@ const Myform = () => {
     <>
         {goBack===true?<Createbtn/>: <div className='myform'>
         <CreateMyForm />
-        <button onClick={handlegoback} className='goBack'>Cancel</button>  
+        <div className='firstbtns'><button onClick={handlegoback} className='goBack'>Cancel</button></div>  
          
         </div>}
     </>

@@ -3,6 +3,7 @@
   padding: 0;
   margin: 0;
   font-family: 'Raleway', sans-serif;
+
 }
 .nav{
   height: 15%;
@@ -53,11 +54,11 @@
   display: flex;
   flex-direction: column;
   background-color: #000;
-  width: 1300px;
+  width: 1450px;
   padding-top: 30px;
   align-items: center;
-  margin-top: 350px;
-  max-height: 500px;
+  margin-top: 440px;
+  height: 550px;
   overflow-y: scroll;
   overflow-x: hidden;
   padding-bottom: 30px;
@@ -87,9 +88,9 @@
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 20px;
-  margin-left: 15px;
-  
+  margin-left: 100px;
+  margin-top: -80px;
+
 }
 .submitbtn{
   height: 40px;
@@ -101,6 +102,7 @@
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
+  margin-right: 70px;
 }
 .createMyForm p{
   color: #fff;
@@ -214,6 +216,7 @@ label{
   border-top: none;
   border-left: none;
   border-right: none;
+  margin-left: 10px;
 }
 .firstrowform input{
   background-color: #fff;
@@ -580,45 +583,35 @@ select{
 .firstcont{
   display: flex;
 }
-/* Example Media Query */
-@media (max-width: 576px) {
-  .rightnav{
-    display: none;
-  }
-  .nav{
-    justify-content: center;
-  }
- 
+.firstbtns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
-@media (max-width: 426px) {
+/* Example Media Query */
+@media (max-width:1440px) {
   .createMyForm{
-    max-width: 300px;
+    max-width: 1350px;
+  }
+  
+}
+
+@media (max-width: 1024px) {
+  .createMyForm{
+    max-width: 900px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
-.services{
-  flex-direction: column;
-  gap: 10px
+.firstrowform input{
+  width: 80px;
 }
-.leftservices{
-  width: 80%;
+.firstrowform p{
+  margin-left: -10px;
+  margin-right: 5px;
 }
-.optgprs{
-  width: 200px;
 }
-.firstrowform{
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
 
-}
-.firstcont input{
-  min-width: 70%;
-}
-.firstcont select{
-  width: 10px;
-}
-}
 /* Example Media Query */
 @media (max-width: 768px) {
   .createMyForm{
@@ -633,6 +626,7 @@ select{
   gap:3px;
   overflow-y:visible;
   padding-right: 20px;
+  padding-left: 20px;
 }
 .firstcont{
   gap: 5px;
@@ -644,7 +638,7 @@ select{
   height: 3px;
   width: 3rem;
   font-size: 10px;
-  margin-left: -10px;
+  /* margin-left: -5px; */
 }
 .firstcont select{
   width: 60px;
@@ -654,7 +648,7 @@ select{
 .firstrowform p{
   text-align: left!important;
   font-size: 10px;
-  margin-right: 10px;
+  /* margin-right: 5px; */
 }
 .services{
   width: 90%;
@@ -700,5 +694,48 @@ select{
   width: 90%;
 }
 
+}
+@media (max-width: 576px) {
+  .rightnav{
+    display: none;
+  }
+  .nav{
+    justify-content: center;
+  }
+ 
+}
+@media (max-width: 426px) {
+  .createMyForm{
+    max-width: 300px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.services{
+  flex-direction: column;
+  gap: 10px
+}
+.leftservices{
+  width: 100%;
+}
+.optgprs{
+  width: 240px;
+}
+.firstrowform{
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  padding-left: 30px;
+  gap: 2px;
+}
+.firstrowform p{
+  font-size: 12px;
+}
+.firstcont input{
+  min-width: 70%;
+}
+.firstcont select{
+  width: 150px;
+  font-size: 10px;
+}
 }
 

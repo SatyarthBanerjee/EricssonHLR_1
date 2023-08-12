@@ -438,7 +438,7 @@ const CreateMyForm = () => {
 
           
             <div className='optgprs'>
-              {data.GetResponseSubscriber.services.optgprss.optgprs.length !== 5 ?
+              {data.GetResponseSubscriber.services.optgprss.optgprs.length !== 5?
                 <button className="addbutton" onClick={handleAdd}>+</button>
                 : <button className='addbuttondisabled'>+</button>
               }
@@ -463,13 +463,15 @@ const CreateMyForm = () => {
                     />
                     : <label>*Numeric and 1 digit only</label>
                   }
-
-                  <img
+                  {data.GetResponseSubscriber?.services?.optgprss?.optgprs.length!==1?
+                    <img
                     className="deletebutton"
                     src='/Images/delete.png'
                     alt="Delete"
                     onClick={() => handleDelete(index)}
-                  />
+                  />:null
+                  }
+                  
                 </div>
               ))}
             </div>
@@ -501,7 +503,7 @@ const CreateMyForm = () => {
       
       
         {isLoading?<Spin style={{position:"absolute", top:"50%", left:"50%", height: "40px", width: "40px"}}/>:null}
-      <button className="submitbtn" onClick={handleSubmit}>Submit</button>
+      <div className='firstbtns'><button className="submitbtn" onClick={handleSubmit}>Submit</button></div>
       {/* <button className='updatebtn' onClick={handleUpdate}>Update</button> */}
     </>
   )
