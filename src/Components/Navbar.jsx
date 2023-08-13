@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
   const navigate=useNavigate()
@@ -17,8 +18,10 @@ const Navbar = () => {
                 <li><a href='#'>Home</a></li>
                 <li><a href='#'>About</a></li>
                 <li><a href='#'>Contact Us</a></li>
-                <li><a onClick={handleLogout}>LogOut</a></li>
+                <a onClick={handleLogout}>LogOut</a>
+               
             </ul>
+                       
         </div>
       
     </div>

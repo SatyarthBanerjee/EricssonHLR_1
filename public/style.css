@@ -159,7 +159,7 @@ label{
 .deletebutton{
   height: 25px;
   cursor: pointer;
-  margin-top: 2px;
+  margin-top: 1.5px;
   margin-left: 5px;
 }
 .addbutton{
@@ -589,11 +589,54 @@ select{
   align-items: center;
   margin-top: 20px;
 }
+.hamburg{
+  height: 25px;
+  margin-top: -2.5px;
+  visibility: hidden;
+}
+.subfcont{
+  display: flex;
+
+}
+.subfcont input{
+  width: 70%;
+  margin-left: 5px;
+}
+.subfcont select{
+  width: 70%;
+  margin-left: 7px;
+}
+
 /* Example Media Query */
 @media (max-width:1440px) {
   .createMyForm{
     max-width: 1350px;
   }
+  
+}
+@media (min-width:1440px) {
+  .createMyForm{
+    min-width: 1000px;
+  }
+  .searchResults{
+    min-width: 1400px
+  }
+  .submformfp input{
+    width: 70%;
+  }
+}
+@media (max-width:1250px) {
+  .createMyForm{
+    max-width: 1200px;
+  }
+  .firstrowform input{
+    width: 100px;
+    margin-left: 10px;
+  }
+  .searchResults{
+    width: 1200px;
+  }
+  
   
 }
 @media (max-width:1200px) {
@@ -604,18 +647,12 @@ select{
     width: 100px;
     margin-left: 10px;
   }
-  
-}
-@media (min-width:1200px) {
-  .createMyForm{
-    max-width: 1100px;
-  }
-  .firstrowform input{
-    width: 100px;
-    margin-left: 10px;
+  .searchResults{
+    width: 1200px;
   }
   
 }
+
 
 @media (max-width: 1024px) {
   .createMyForm{
@@ -628,6 +665,15 @@ select{
 }
 .firstrowform p{
   margin-left: -5px;
+}
+.searchResults{
+  width: 1000px;
+}
+.submformfp input{
+  width: 90px;
+}
+.submformfp select{
+  width: 60px;
 }
 }
 /* @media (min-width: 1024px) {
@@ -727,14 +773,42 @@ select{
 .lastPart{
   width: 90%;
 }
+.searchResults{
+  width: 765px;
+}
+.submservices{
+  gap:10px
+}
+.submformfp{
+  padding-right: 100px;
+}
+.submformfp input{
+  width: 70px;
+  font-size: 11px;
+  padding-left: 2px;
+  overflow-x: scroll;
+}
+.submformfp select{
+  width: 50px;
+}
+.submformfp p{
+  font-size: 14px;
+  margin-left: 5px;
+}
 
 }
 @media (max-width: 576px) {
-  .rightnav{
+  .logo{
+    margin-left: 0;
+  }
+  .rightnav ul li{
     display: none;
   }
+  .hamburg{
+    visibility: visible;
+  }
   .nav{
-    justify-content: center;
+    justify-content: space-between;
   }
  
 }
@@ -771,5 +845,58 @@ select{
   width: 150px;
   font-size: 10px;
 }
+.searchResults{
+  width: 400px;
+}
+.submservices{
+  gap:10px
+}
+.submformfp{
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 10px
+}
+.submformfp input{
+  width: 90px;
+  font-size: 11px;
+  padding-left: 2px;
+}
+.submformfp select{
+  width: 60px;
+}
+.search{
+  width: 140px;
+}
+.submservices{
+  flex-direction: column;
+}
+.leftside{
+  width: 100%;
+}
+.rightoptgrs{
+  width: 100%;
+  padding-left: 10px;
+  margin-top: 15px;
+}
+.rightoptgrs input{
+  width: 40px;
+}
+.subfcont{
+  display: flex;
+  justify-content: space-between;
+  width: 330px;
+  /* background-color: #000; */
+}
+.subfcont input{
+  width: 70%;
+}
+.subfcont select{
+  width: 70%;
+}
+}
+@media (max-width:375px) {
+  .searchResults{
+    width: 350px;
+  }
 }
 

@@ -444,24 +444,37 @@ const SubmittedForm = () => {
           searchResults.map((data, index) => (
             <div className="searchResults" key={index}>
               <div className="submformfp">
+              <div className="subfcont">
+                <p>Imsi: </p>
+                  <input
+                    value={data.GetResponseSubscriber?.imsi}
+                    disabled={true}
+                  ></input>
+              </div>
+              <div className="subfcont">
                 <p>Imsi: </p>
                 <input
                   value={data.GetResponseSubscriber?.imsi}
                   disabled={true}
                 ></input>
+              </div>
+              <div className="subfcont">
                 <p>Msisdn: </p>
                 <input
                   value={data.GetResponseSubscriber?.msisdn}
                   disabled={true}
 
                 ></input>
+              </div>
+              <div className="subfcont">
                 <p>hlrsn: </p>
                 {throwError===true?<p style={{color: "red", fontSize:"10px"}}>Enter Valid number</p>: <input
                   value={data.GetResponseSubscriber?.hlrsn}
                   disabled={enable}
                   onChange={e => handleChange('hlrsn', null, null, e.target.value)}
                 ></input>}
-               
+              </div>
+              <div className="subfcont">
                 <p>CardTyp: </p>
                 <select  value={data.GetResponseSubscriber?.cardType} disabled={enable}  onChange={e => { handleChange('cardType', null, null, e.target.value) }}>
                   <option>
@@ -477,21 +490,24 @@ const SubmittedForm = () => {
                     OP3
                   </option>
                 </select>
-                <p>Nam: </p>
-                <select value={data.GetResponseSubscriber?.nam} disabled={enable} onChange={e => { handleChange('nam', null, null, e.target.value) }}>
-                  <option>
-                    **{data.GetResponseSubscriber?.nam}**
-                  </option>
-                  <option value="option1">
-                    OPT1
-                  </option>
-                  <option value="option2">
-                    OPT2
-                  </option>
-                  <option value="option3">
-                    OPT3
-                  </option>
-                </select>
+              </div>
+              <div className="subfcont">
+                  <p>Nam: </p>
+                  <select value={data.GetResponseSubscriber?.nam} disabled={enable} onChange={e => { handleChange('nam', null, null, e.target.value) }}>
+                    <option>
+                      **{data.GetResponseSubscriber?.nam}**
+                    </option>
+                    <option value="option1">
+                      OPT1
+                    </option>
+                    <option value="option2">
+                      OPT2
+                    </option>
+                    <option value="option3">
+                      OPT3
+                    </option>
+                  </select>
+                </div>
               </div>
               <h1 style={{ color: "White", fontSize: "20px" }}>Services</h1>
               <div className="submservices">
