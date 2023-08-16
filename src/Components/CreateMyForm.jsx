@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { DropDown1, DropDown2, DropDown3, DropDown4, DropDown5, DropDown6, DropDown7, DropDown8 } from './DropDowns/DropDown'
-import { Switch, Spin } from 'antd'
+import { Switch, Spin, Modal } from 'antd'
 import { postData } from './PostData'
-import popup1 from './Popups/popup1'
+import PopUp_1 from './Popups/PopUp_1'
 
 const CreateMyForm = () => {
   const [data, setData] = useState({
@@ -73,7 +73,7 @@ const CreateMyForm = () => {
   const [isSubmitted, setisSubmitted] = useState(false)
   const [personalError, setPersonalerror] = useState(false)
   const [isLoading, setisLoading]= useState(false)
-
+  const [pop, setPop]= useState(false)
   const handleSwitch = (index) => {
     setData(prevData => {
       const updatedOptgprs = prevData.GetResponseSubscriber.services.optgprss.optgprs.map((item, i) => {
@@ -220,9 +220,7 @@ const CreateMyForm = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    const convertedFormData = convertObjectToString(data);
-    const payloadString = JSON.stringify(convertedFormData);
-    console.log(payloadString);
+
   
     // Check if required fields are not empty
     if (
@@ -235,6 +233,10 @@ const CreateMyForm = () => {
       setError(true);
       alert("Enter all required fields");
     } else {
+      const convertedFormData = convertObjectToString(data);
+      const payloadString = JSON.stringify(convertedFormData);
+      console.log(payloadString);  
+    
       // Check for numeric validations
       if (
         isNaN(parseInt(data.GetResponseSubscriber.imsi)) ||
@@ -254,7 +256,7 @@ const CreateMyForm = () => {
         } else {
           // All validations pass, submit the data
           setisLoading(true)
-          postData(convertedFormData)
+          postData(convertedFormData, setPop)
             .then(() => {
               console.log(convertedFormData);
               setisSubmitted(true);
@@ -501,8 +503,12 @@ const CreateMyForm = () => {
           {/* {isSubmitted === true ? <p className='submitted'>Your data has been submitted</p> : <p className='notsubmitted'>Your data has not been submitted</p>} */}
         </div>
       
-      
+        
         {isLoading?<Spin style={{position:"absolute", top:"50%", left:"50%", height: "40px", width: "40px"}}/>:null}
+        {pop===true?<PopUp_1 
+          message="Data Created"
+          onClose={setPop}
+        />:null}
       <div className='firstbtns'><button className="submitbtn" onClick={handleSubmit}>Submit</button></div>
       {/* <button className='updatebtn' onClick={handleUpdate}>Update</button> */}
     </>

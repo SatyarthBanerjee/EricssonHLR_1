@@ -780,7 +780,7 @@ select{
   gap:10px
 }
 .submformfp{
-  padding-right: 100px;
+  /* padding-right: 100px; */
 }
 .submformfp input{
   width: 70px;
@@ -894,9 +894,18 @@ select{
   width: 70%;
 }
 }
-@media (max-width:375px) {
+@media (max-width:376px) {
   .searchResults{
-    width: 350px;
+    width: 370px;
   }
+  .subfcont input{
+    max-width: 300px ;
+  }
+  .subfcont select{
+    width: 70px;
+  }
+  .logindiv{
+    max-width: 300px
+   } 
 }
 

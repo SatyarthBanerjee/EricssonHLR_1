@@ -3,7 +3,7 @@ import axios from "axios";
 const url = `http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}`;
 const url2 = `http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}`;
 
-export const postData = async (data) => {
+export const postData = async (data, setPopCallBack) => {
   try {
     const request = [
       "POST",
@@ -13,9 +13,8 @@ export const postData = async (data) => {
     ];
     let res = await axios.post(`${url}/new-data`, data);
     console.log("Data saved: ", res.data);
-    setTimeout(() => {
-      alert("Data Saved");
-    }, 500);
+    setPopCallBack(true)
+    
 
     try {
       const response = [
@@ -31,8 +30,16 @@ export const postData = async (data) => {
     }
   } catch (error) {
     console.log("Error calling postData--> ", error.message);
-    setTimeout(() => {
-      alert("Data couldn't be saved!", 1000);
-    });
+    if (error.response && error.response.status===400){
+      setTimeout(()=>{
+        alert("Data already exists")
+      })
+    }
+    else{
+      setTimeout(() => {
+        alert("Data couldn't be saved!", 1000);
+      });
+    }
+  
   }
 };

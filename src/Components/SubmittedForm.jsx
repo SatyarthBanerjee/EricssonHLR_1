@@ -4,6 +4,7 @@ import { produce } from "immer";
 import Navbar from "./Navbar";
 import { Spin, Switch } from "antd";
 import axios from "axios";
+import PopUp_1 from "./Popups/PopUp_1";
 
 const SubmittedForm = () => {
   const [searchResults, setsearchResults] = useState([]);
@@ -324,6 +325,7 @@ const SubmittedForm = () => {
    
   };
   const [throwError, setthrowError] =useState(false)
+  const [showPopup, setshowPopup] = useState(false)
   const handleUpdateData = async () => {
     if((!Number.isInteger(parseInt(data[0].GetResponseSubscriber.hlrsn)))
     ||(!Number.isInteger(parseInt(data[0].GetResponseSubscriber.skey)))
@@ -354,7 +356,7 @@ const SubmittedForm = () => {
           console.log("Error saving log! --> ", error.message);
         }
 
-        alert("Data updated successfully!");
+        setshowPopup(true)
       } catch (error) {
         alert("Error updating data:", error);
       }
@@ -411,6 +413,7 @@ const SubmittedForm = () => {
       console.log(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_LOG_PORT}/addRestLog`);
       await axios.put(`http://${process.env.REACT_APP_ENDPOINT}:${process.env.REACT_APP_SERVER_PORT}/delete/${imsiNumber}`, data[0]);
   }
+
  
 
   return (
@@ -450,13 +453,6 @@ const SubmittedForm = () => {
                     value={data.GetResponseSubscriber?.imsi}
                     disabled={true}
                   ></input>
-              </div>
-              <div className="subfcont">
-                <p>Imsi: </p>
-                <input
-                  value={data.GetResponseSubscriber?.imsi}
-                  disabled={true}
-                ></input>
               </div>
               <div className="subfcont">
                 <p>Msisdn: </p>
@@ -661,6 +657,10 @@ const SubmittedForm = () => {
           ))
         )}
         {isLoading?<Spin style={{position:"absolute", top:"50%", left:"50%"}}/>:null}
+        {showPopup===true?<PopUp_1 
+          message = "Data Updated successfully!"
+          onClose = {setshowPopup}
+        />:null}
       </div>
       <div className="allbtns">
         {editEnable === true ? (
