@@ -606,7 +606,14 @@ select{
   width: 70%;
   margin-left: 7px;
 }
-
+.serv_name{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.serv_name h1{
+  color: #000
+}
 /* Example Media Query */
 @media (max-width:1440px) {
   .createMyForm{
@@ -856,14 +863,14 @@ select{
   flex-direction: column;
   gap: 10px
 }
-.submformfp input{
+/* .submformfp input{
   width: 90px;
   font-size: 11px;
   padding-left: 2px;
 }
 .submformfp select{
   width: 60px;
-}
+} */
 .search{
   width: 140px;
 }
@@ -894,18 +901,17 @@ select{
   width: 70%;
 }
 }
-@media (max-width:376px) {
-  .searchResults{
-    width: 370px;
+@media (min-width: 426px){
+  .subfcont{
+    display: flex;
+    justify-content: space-between;
+    width: 330px;
+    /* background-color: #000; */
   }
   .subfcont input{
-    max-width: 300px ;
+    width: 70%;
   }
   .subfcont select{
-    width: 70px;
+    width: 70%;
   }
-  .logindiv{
-    max-width: 300px
-   } 
 }
-

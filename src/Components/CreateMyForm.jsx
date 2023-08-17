@@ -436,9 +436,6 @@ const CreateMyForm = () => {
                 </div>
             
           </div>
-          
-
-          
             <div className='optgprs'>
               {data.GetResponseSubscriber.services.optgprss.optgprs.length !== 5?
                 <button className="addbutton" onClick={handleAdd}>+</button>

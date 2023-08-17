@@ -330,7 +330,11 @@ const SubmittedForm = () => {
     if((!Number.isInteger(parseInt(data[0].GetResponseSubscriber.hlrsn)))
     ||(!Number.isInteger(parseInt(data[0].GetResponseSubscriber.skey)))
     &&(data[0].GetResponseSubscriber.hlrsn.trim().length===0)
-    ||(data[0].GetResponseSubscriber.skey.trim().length===0)){
+    ||(data[0].GetResponseSubscriber.skey.trim().length===0)
+    ){
+      setthrowError(true)
+    }
+    else if(data[0].GetResponseSubscriber.hlrsn.trim().length>1 || data[0].GetResponseSubscriber.skey.trim().length>1){
       setthrowError(true)
     }
     else{
@@ -505,7 +509,10 @@ const SubmittedForm = () => {
                   </select>
                 </div>
               </div>
-              <h1 style={{ color: "White", fontSize: "20px" }}>Services</h1>
+              <div className="serv_name">
+                <h2>Services</h2>
+              </div>
+              
               <div className="submservices">
                 <div className="leftside">
                   <div className="leftcont">
