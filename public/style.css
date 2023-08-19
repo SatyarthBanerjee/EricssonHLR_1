@@ -26,6 +26,7 @@
 .logo{
   margin-bottom: 15px;
   cursor: pointer;
+  margin-left: 50px;
 }
 .rightnav ul a{
   text-decoration: none;
@@ -614,6 +615,28 @@ select{
 .serv_name h1{
   color: #000
 }
+.togglemenu{
+  background-color: black;
+  opacity: 0.9;
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  visibility: hidden;
+  height: 48vh;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 40px;
+  padding-top: 15px;
+  z-index: 2;
+  border-radius: 10px;
+  transition: height 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.closetoggle{
+  height: 18px;
+}
 /* Example Media Query */
 @media (max-width:1440px) {
   .createMyForm{
@@ -816,6 +839,9 @@ select{
   }
   .nav{
     justify-content: space-between;
+  }
+  .togglemenu{
+    visibility: visible;
   }
  
 }
