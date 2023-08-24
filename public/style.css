@@ -638,23 +638,24 @@ select{
   height: 18px;
 }
 /* Example Media Query */
-@media (max-width:1440px) {
+@media (max-width:1848px) {
   .createMyForm{
-    max-width: 1350px;
-  }
-  
-}
-@media (min-width:1440px) {
-  .createMyForm{
-    min-width: 1000px;
+    max-width: 1600px;
   }
   .searchResults{
-    min-width: 1400px
+    max-width: 1400px
   }
   .submformfp input{
     width: 70%;
   }
 }
+@media (max-width:1440px) {
+  .createMyForm{
+    max-width: 1400px;
+  }
+  
+}
+
 @media (max-width:1250px) {
   .createMyForm{
     max-width: 1200px;

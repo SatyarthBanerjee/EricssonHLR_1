@@ -4,7 +4,7 @@ import Togglemenu from './Togglemenu'
 const Navbar = () => {
   const navigate=useNavigate()
   const handleHome=()=>{
-    navigate("/Home")
+    navigate("/")
   }
   const handleLogout = ()=>{
     navigate("/")
@@ -17,7 +17,7 @@ const Navbar = () => {
     navigate("/submittedform")
   }
   const goHome =()=>{
-    navigate('/Home')
+    navigate('/')
   }
   return (
     <div className='nav'>

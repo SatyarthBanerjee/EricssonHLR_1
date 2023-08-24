@@ -13,7 +13,7 @@ const Togglemenu = ({onClose, tog}) => {
       navigate("/submittedform")
     }
     const gotoHome =()=>{
-      navigate('/Home')
+      navigate('/')
     }
   return (
     <div className="togglemenu">
