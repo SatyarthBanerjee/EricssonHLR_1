@@ -9,11 +9,17 @@ const Togglemenu = ({onClose, tog}) => {
     const gotomain =()=>{
         navigate("/")
     }
+    const gotoShow =()=>{
+      navigate("/submittedform")
+    }
+    const gotoHome =()=>{
+      navigate('/Home')
+    }
   return (
     <div className="togglemenu">
             <img className="closetoggle" onClick={closetoggle} src='/Images/close (1).png'></img>
-            <p><a href='#'>Home</a></p>
-            <p><a href='#'>About</a></p>
+            <p><a onClick={gotoHome}>Home</a></p>
+            <p><a onClick={gotoShow}>Show data</a></p>
             <p><a href='#'>Contact Us</a></p>
             <p><a onClick={gotomain}>LogOut</a></p>
       

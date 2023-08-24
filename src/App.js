@@ -6,15 +6,15 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 function App() {
   return (
     <>
-      <GoogleOAuthProvider clientId="267034138399-21c0pgqmf674ekrr6bpeut2khqfpddvc.apps.googleusercontent.com">
+      {/* <GoogleOAuthProvider clientId="267034138399-21c0pgqmf674ekrr6bpeut2khqfpddvc.apps.googleusercontent.com"> */}
         <Router>
           <Routes> 
-            <Route exact path="/" element ={<LoginDialog />}></Route>
-            <Route  path="/Home" element={<AppChild />} />
+            {/* <Route exact path="/" element ={<LoginDialog />}></Route> */}
+            <Route  path="/" element={<AppChild />} />
             <Route path="/submittedform" element={<SubmittedForm />} />
           </Routes>
         </Router>
-      </GoogleOAuthProvider>
+      {/* </GoogleOAuthProvider> */}
     </>
   );
 }

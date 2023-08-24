@@ -13,6 +13,12 @@ const Navbar = () => {
   const handleHamburg =()=>{
     settoggle(true);
   }
+  const showData = ()=>{
+    navigate("/submittedform")
+  }
+  const goHome =()=>{
+    navigate('/Home')
+  }
   return (
     <div className='nav'>
         <div className='leftnav'>
@@ -20,8 +26,8 @@ const Navbar = () => {
         </div>
         <div className='rightnav'>
             <ul>
-                <li><a href='#'>Home</a></li>
-                <li><a href='#'>About</a></li>
+                <li><a onClick={goHome}>Home</a></li>
+                <li><a onClick={showData}>Show Data</a></li>
                 <li><a href='#'>Contact Us</a></li>
                 <li><a onClick={handleLogout}>LogOut</a></li>
                 {toggle===true?<Togglemenu onClose ={settoggle}/>:<img onClick ={handleHamburg} className="hamburg" src = "/Images/9104209_hamburger_menu_navigation_navbar_icon (1).png"></img>}
